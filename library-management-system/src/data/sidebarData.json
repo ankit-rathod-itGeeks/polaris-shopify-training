@@ -1,0 +1,47 @@
+{
+    "sidebarItems": [
+      {
+        "icon": "MdAdminPanelSettings",
+        "text": "Admin Profile",
+        "path":"adminProfile"
+      },
+      {
+        "icon": "SiBookstack",
+        "text": "Books"
+      },
+      {
+        "icon": "PiStudentFill",
+        "text": "Students"
+      }
+      ,
+      {
+        "icon": "GiTeacher",
+        "text": "Teachers"
+      }
+      ,
+      {
+        "icon": "TiUserAdd",
+        "text": "Add User",
+        "path":"addUser"
+      }
+      ,
+      {
+        "icon": "BiSolidBookAdd",
+        "text": "Add Book",
+          "path":"addBook"
+      }
+      ,
+      {
+        "icon": "FaBookOpenReader",
+        "text": "Issue Book",
+          "path":"issueBook"
+      }
+      ,
+      {
+        "icon": "TiUserDeleteOutline",
+        "text": "Submit Book",
+          "path":"submitBook"
+      }
+    ]
+  }
+  
