@@ -1,5 +1,5 @@
 
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { MdAdminPanelSettings } from "react-icons/md";
 import { SiBookstack } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
@@ -21,24 +21,40 @@ import { MyContext } from '../MyContext';
 
 
 function Sidebar() {
+  const {currUser,setCurrUser}=useContext(MyContext)
+  const [sidebarItems,setSidebarItems]=useState([])
+  // let sidebarData=[]
+  
+  console.log(sidebarData);
+
+  useEffect(() => {
+    if (currUser.role === 'Admin') {
+        setSidebarItems(sidebarData.sidebarItems);
+    } else {
+        setSidebarItems(sidebarData.studentsSidebar);
+    }
+}, [currUser.role]);
+
+
+console.log("current user -- ",currUser);
 
   const admin={
     icon:"",
     text:"Admin Dashboard "
   }
-  const {sidebarItems}=sidebarData
-  console.log("================",sidebarItems);
+  
+ 
   const {hideSidebar,setHideSidebar}=useContext(MyContext)
   const navigate=useNavigate()
   const handleLogout=()=>{
-    console.log("clicked logout");
+    setCurrUser({})
 navigate('/')
   }
   return (
-    <div style={hideSidebar? {width:'100%',transitionDuration:'1s'} : null} className='h-[93vh] overflow-scroll rounded-lg bg-[#3B3B41] flex flex-col  m-4'>
+    <div  className=' fixed h-[93vh] overflow-scroll rounded-lg bg-[#3B3B41] flex flex-col  m-4'>
        <div  className="cursor-pointer  bg-[#3B3B41] text-white w-[100%] rounded-lg flex flex-col justify-between  items-center">
             <div onClick={()=>{navigate('/dashboard')}} className="p-4 text-lg flex w-[100%] justify-center items-center flex-col gap-4 font-bold">
-              {!hideSidebar ? "Admin Dashboard" : <RxDashboard></RxDashboard>}
+              {!hideSidebar ? `${currUser.role} Dashboard`: <RxDashboard></RxDashboard>}
               <hr className='w-[100%]'></hr>
               </div>
             {
@@ -55,7 +71,7 @@ navigate('/')
             TiUserDeleteOutline:TiUserDeleteOutline,
           }[item.icon]; 
           return (
-            <div onClick={()=>{navigate(item?.path)}} className='w-[80%] hover:bg-[#464242] rounded-lg ml-3 mt-4 flex gap-2 items-center p-2'>
+            <div key={item.text} onClick={()=>{navigate(item?.path)}} className='w-[80%] hover:bg-[#464242] rounded-lg ml-3 mt-4 flex gap-2 items-center p-2'>
               {IconComponent && <IconComponent className='text-3xl' />}
               {
                 <Link 

@@ -3,15 +3,17 @@
       {
         "icon": "MdAdminPanelSettings",
         "text": "Admin Profile",
-        "path":"adminProfile"
+        "path":"profile"
       },
       {
         "icon": "SiBookstack",
-        "text": "Books"
+        "text": "Books",
+         "path":"books"
       },
       {
         "icon": "PiStudentFill",
-        "text": "Students"
+        "text": "Students",
+        "path":"users"
       }
       ,
       {
@@ -42,6 +44,36 @@
         "text": "Submit Book",
           "path":"submitBook"
       }
+    ],
+
+
+    "studentsSidebar": [
+      {
+        "icon": "MdAdminPanelSettings",
+        "text": "Students Profile",
+        "path":"profile"
+      },
+      {
+        "icon": "SiBookstack",
+        "text": "Issued Books",
+         "path":"books"
+      },
+      {
+        "icon": "PiStudentFill",
+        "text": "Subjects",
+        "path":"users"
+      }
+      ,
+      {
+        "icon": "GiTeacher",
+        "text": "History"
+      }
+      
+      
+     
+     
+    
     ]
+
   }
   

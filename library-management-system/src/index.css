@@ -21,3 +21,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.successbox{
+  display: flex;
+  transition-duration: 2s;
+  animation: successAnimate  3s  forwards;
+}
+
+@keyframes successAnimate {
+  0% {
+    opacity: 0; 
+    transform: scale(0); 
+  }
+  50% {
+    opacity: 0.5; 
+    transform: scale(1.1); 
+  }
+  100% {
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}

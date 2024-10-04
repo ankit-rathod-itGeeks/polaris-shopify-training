@@ -1,12 +1,14 @@
 
 
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 
 import HomeMain from '../components/HomeMain'
 import axios from 'axios'
 import { redirect, useNavigate } from 'react-router-dom'
+import { MyContext } from '../MyContext'
 
 function Home() {
+  const {currUser,setCurrUser}=useContext(MyContext)
  const navigate=useNavigate();
   const [user, setUser] = useState({})
   const [message, setMessage] = useState("")
@@ -14,9 +16,14 @@ function Home() {
 
 const handleLogin=async ()=>{
  const response =await axios.post('http://localhost:8000/admin/login',user)
- console.log(response.data.result.status);
+ console.log(response);
+ 
 if(response.data.result.status==true){
-  console.log(response);
+  
+console.log(response.data.result.result);
+  setCurrUser(response.data.result.result)
+  console.log(currUser);
+  
   setLoginSuccess(true)
   navigate('/dashboard')
  
@@ -52,6 +59,7 @@ setMessage("Invalid Credentials")
 
   <button onClick={handleLogin} className='bg-blue-300 p-3 px-5 mt-4 rounded-full'>Login</button>
   <label className='text-gray-500 cursor-pointer'>forget Password?</label>
+  <label className='bg-white text-black p-2 rounded-full mt-2' onClick={()=>navigate('/registerStudent')}>Not Registered </label>
 
 
 

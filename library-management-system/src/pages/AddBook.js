@@ -3,10 +3,15 @@ import Sidebar from '../components/Sidebar'
 import HeaderDashboard from '../components/HeaderDashboard'
 import axios from 'axios';
 import { MyContext } from '../MyContext';
+import SuccessCard from '../components/SuccessCard';
 
 
 function AddBook() {
     // const {hideSidebar, setHideSidebar}=useContext(MyContext)
+    const [success,setSuccess]=useState(false)
+    const {render,setRender}=useContext(MyContext)
+    const [bookId,setBookId]=useState()
+    const text="Book Added Successfully"
     const [formData, setFormData] = useState({
         bookName: '',
         bookId: '',
@@ -36,19 +41,29 @@ function AddBook() {
                 pages: '',
                 price: '',
             })
+
+            setRender((val)=>!val)
+            setSuccess(true)
+            setBookId(response.data.result.result.id)
+            setTimeout(()=>setSuccess(false),3000)
          }
        
     };
   return (
     <div className='w-[100%] h-[100%] bg-[#E5E7EB] flex '>
+        
     
    
    <div  className='w-[100%]'>
+   
       
-       <div>
 
-       <form onSubmit={handleSubmit} className="bg-white py-[110px] w-[100%] rounded shadow-md">
-         
+       <form onSubmit={handleSubmit} className="bg-white py-[110px] flex flex-col justify-center items-center  w-[100%] rounded shadow-md">
+       <SuccessCard id={"Book Id - "+bookId} text={text} success={success}></SuccessCard>
+
+       {!success ? 
+       
+    
 
          <div className='flex w-full  justify-around items-center '>
          <div>
@@ -133,7 +148,16 @@ function AddBook() {
 
           </div>
          </div>
-           <div className='flex justify-center items-center'>
+
+         : null}
+
+
+         {
+            !success ?
+
+
+         
+           <div className='flex w-full justify-center items-center'>
            <button
                 type="submit"
                 className="w-[20%] bg-[#081029] text-white font-bold py-2 rounded hover:bg-blue-500"
@@ -141,10 +165,14 @@ function AddBook() {
                 Add Book
             </button>
            </div>
+
+           : null
+            }
+
         </form>
 
 
-       </div>
+    
       
    </div>
 

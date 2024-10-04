@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import HeaderDashboard from '../components/HeaderDashboard'
 import axios from 'axios';
+import SuccessCard from '../components/SuccessCard';
+import { MyContext } from '../MyContext';
 
 function AddUser() {
+     const [success,setSuccess]=useState(false)
+     const {render,setRender}=useContext(MyContext)
+     const [userId,setUserId]=useState()
+    const text="User Added Successfully"
 
     const [formData, setFormData] = useState({
         userName: '',
@@ -24,7 +30,7 @@ function AddUser() {
 
     const handleSubmit = async(e) => {
         e.preventDefault();
-        // Handle form submission (e.g., send data to the server)
+        
 
         const response=await axios.post('http://localhost:8000/admin/register', formData);
         console.log(response);
@@ -38,6 +44,12 @@ function AddUser() {
             password: '',
            })
         }
+        console.log("id from response=---",response.data.result.result.id);
+        setRender((val)=>!val)
+        setSuccess(true)
+        setUserId(response.data.result.result.id)
+        
+        setTimeout(()=>setSuccess(false),4000)
        
     };
   return (
@@ -48,9 +60,11 @@ function AddUser() {
       
        <div>
 
-       <form onSubmit={handleSubmit} className="bg-white py-[110px] w-[100%] rounded shadow-md">
-         
+       <form onSubmit={handleSubmit} className="bg-white flex flex-col justify-center items-center py-[110px] w-[100%] rounded shadow-md">
 
+       <SuccessCard id={"User Id :"+userId} text={text} success={success}></SuccessCard>
+         
+    {!success ? 
          <div className='flex w-full  justify-around items-center '>
          <div>
            <div className="mb-4 w-full">
@@ -147,14 +161,21 @@ function AddUser() {
 
           </div>
          </div>
-           <div className='flex justify-center items-center'>
+
+         :null}
+
+         {!success ? 
+           <div className='flex w-[100%] justify-center items-center'>
            <button
+           onClick={handleSubmit}
                 type="submit"
                 className="w-[20%] bg-[#081029] text-white font-bold py-2 rounded hover:bg-blue-500"
             >
                 Add User
             </button>
            </div>
+           :null 
+         }
         </form>
 
 

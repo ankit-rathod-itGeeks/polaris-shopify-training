@@ -5,9 +5,55 @@ import BookListAdminProfile from '../components/BookListAdminProfile';
 import TopChoices from '../components/TopChoices';
 import axios from 'axios';
 import { MyContext } from '../MyContext';
+import { IoBookSharp } from "react-icons/io5";
+import { LuBookOpenCheck } from "react-icons/lu";
 function AdminProfile() {
 
-    const {books, setBooks}=useContext(MyContext)
+    useEffect(()=>{
+        getBooksdata()
+      },[])
+    useEffect(()=>{
+        getAllUsers()
+      },[])
+    useEffect(()=>{
+        getAllIssuedBooks()
+      },[])
+
+
+     const [books, setBooks] = useState([]);
+     const [users, setUsers] = useState([]);
+     const [issuedBooks, setIssuedBooks] = useState([]);
+
+
+     const getBooksdata =()=>{
+        axios.get('http://localhost:8000/admin/allBooks').then((res)=>{
+         
+          setBooks(res.data.result.result.rows)
+        
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+     const getAllIssuedBooks =()=>{
+        axios.get('http://localhost:8000/admin/allIssuedBooks').then((res)=>{
+         
+          setIssuedBooks(res.data.result.result)
+        
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+     const getAllUsers =()=>{
+        axios.get('http://localhost:8000/admin/allUsers').then((res)=>{
+         
+          setUsers(res.data.result.result.rows)
+        
+        }).catch((error)=>{
+          console.log(error);
+        })
+      }
+
+ 
   
     function formatDate(date) {
         const months = [
@@ -20,7 +66,7 @@ function AdminProfile() {
         const year = date.getFullYear();
         const seconds=date.getSeconds();
     
-        return `${day} ${month}, ${year} ,${seconds}`;
+        return `${day} ${month}, ${year} `;
     }
     const date = new Date();
   return (
@@ -45,41 +91,41 @@ function AdminProfile() {
  <div className='mt-5 flex gap-2 justify-between'>
 
 
- <div class=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+ <div className=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
 <div>
-    <div class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Books</div>
-<div class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{books.length}</div>
+    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Books</div>
+<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{books.length}</div>
+</div>
+<IoBookSharp className='text-5xl text-[#F65867]'></IoBookSharp>
+
+
+</div>
+ <div className=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+
+<div>
+    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
+<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{users.length}</div>
 </div>
 <HiUsers className='text-5xl text-[#F65867]'></HiUsers>
 
 
 </div>
- <div class=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+ <div className=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
 <div>
-    <div class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
-<div class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">102</div>
+    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Issued Books</div>
+<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{issuedBooks.count}</div>
 </div>
-<HiUsers className='text-5xl text-[#F65867]'></HiUsers>
+<LuBookOpenCheck className='text-5xl text-[#F65867]'></LuBookOpenCheck>
 
 
 </div>
- <div class=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+ <div className=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
 <div>
-    <div class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
-<div class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">102</div>
-</div>
-<HiUsers className='text-5xl text-[#F65867]'></HiUsers>
-
-
-</div>
- <div class=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-
-<div>
-    <div class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
-<div class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">102</div>
+    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
+<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">102</div>
 </div>
 <HiUsers className='text-5xl text-[#F65867]'></HiUsers>
 

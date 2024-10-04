@@ -1,15 +1,20 @@
 
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import Home from './pages/Home';
 import Dashboard from './pages/dashboard';
 import AddUser from './pages/AddUser'
 import AddBook from './pages/AddBook';
 import  IssueBook from './pages/IssueBook'
 import SubmitBook from './pages/SubmitBook';
-import { MyProvider } from './MyContext';
+import { MyContext, MyProvider } from './MyContext';
 import DashboardHome from './pages/DashboardHome';
 import AdminProfile from './pages/AdminProfile';
+import AllUsersPage from './pages/AllUsersPage';
+import StudentsHome from './pages/Students/StudentsHome';
+import StudentDashboard from './pages/Students/StudentDashboard';
+import RegistrationForm from './pages/Students/RegistrationForm';
+
 
 
 const router = createBrowserRouter([
@@ -17,31 +22,70 @@ const router = createBrowserRouter([
     path:'/',
     element:<Home></Home>
   },
+  {
+    path:'/registerStudent',
+    element:<RegistrationForm></RegistrationForm>
+  },
     {
     path:'/dashboard',
-    element: <Dashboard />,
+    element:( 
+    <PrivateRoute>
+
+      <Dashboard />
+
+    </PrivateRoute>
+  
+  ),
     // errorElement: <NotFound />,
     children: [
-      { index: true, element: <DashboardHome />}, 
+      { index: true, element: < AdminProfile/>}, 
       { path:'addBook', element: <AddBook />},
       { path:'addUser', element: <AddUser />},
       { path:'issueBook', element: <IssueBook />},
       { path:'submitBook', element: <SubmitBook />},
-      { path:'adminProfile', element: <AdminProfile />},
+      { path:'books', element: < DashboardHome/>},
+      { path:'profile', element: < AdminProfile/>},
+      { path:'users', element: < AllUsersPage/>},
   ],
    },
+   {
+    path:'/studentsHome',
+    element:<StudentDashboard></StudentDashboard>,
+
+    
+    children:[
+      {
+        index:true,element:<StudentsHome></StudentsHome>
+      }
+    ]
+   }
   
   ]);
+
+  function PrivateRoute({ children }) {
+
+    const {currUser,setCurrUser}=useContext(MyContext)
+
+console.log(currUser)
+    const role = currUser.role;
+    console.log("Role from the pricvale route ",role)
+    return role=="Admin" ? children : <Navigate to="/studentsHome" />;
+  }
+
+
 const App = () => {
+  
     return ( 
     <MyProvider>
 
       <RouterProvider router={router} />
+
     </MyProvider>
     );
 };
 
 export default App;
+
 
 
 
@@ -61,83 +105,40 @@ export default App;
 // import  IssueBook from './pages/IssueBook'
 // import SubmitBook from './pages/SubmitBook';
 // import { MyProvider } from './MyContext';
+// import DashboardHome from './pages/DashboardHome';
+// import AdminProfile from './pages/AdminProfile';
+// import AllUsersPage from './pages/AllUsersPage';
 
 
 // const router = createBrowserRouter([
-//     {
+//   {
 //     path:'/',
-//     element: <Home />,
-   
-//     children: [
-//       { index: true, element: <Home />}, 
-//       { path:'/admin/dashboard', element: <Dashboard />},
-//   ],
-//    },
-  
-//   ]);
-  
-
-// const App = () => {
-//     return <RouterProvider router={router} />;
-
-    
-//     // return (
-        
-//     // //    <MyProvider>
-//     // //      <Router>
-//     // //         <Routes>
-//     // //             <Route path="/" element={<Home />}  children />
-//     // //             <Route path="/admin/dashboard" element={<Dashboard />} />
-//     // //             <Route path="/admin/dashboard/addUser" element={<AddUser />} />
-//     // //             <Route path="/admin/dashboard/addBook" element={<AddBook />} />
-//     // //             <Route path="/admin/dashboard/issueBook" element={<IssueBook />} />
-//     // //             <Route path="/admin/dashboard/submitBook" element={<SubmitBook />} />
-//     // //         </Routes>
-//     // //     </Router>
-//     // //    </MyProvider>
-//     // );
-// };
-
-// export default App;
-
-
-
-// import React from 'react';
-// import { BrowserRouter as Router, Route, Routes, createBrowserRouter } from 'react-router-dom';
-// import Home from './pages/Home';
-// import Dashboard from './pages/dashboard';
-// import AddUser from './pages/AddUser'
-// import AddBook from './pages/AddBook';
-// import  IssueBook from './pages/IssueBook'
-// import SubmitBook from './pages/SubmitBook';
-// import { MyProvider } from './MyContext';
-
-// const router = createBrowserRouter([
+//     element:<Home></Home>
+//   },
 //     {
-//     path:'/',
+//     path:'/dashboard',
 //     element: <Dashboard />,
 //     // errorElement: <NotFound />,
 //     children: [
-//       { index: true, element: <Home />}, 
-//     //   { path:'/box1', element: <Box1 />},
+//       { index: true, element: < AdminProfile/>}, 
+//       { path:'addBook', element: <AddBook />},
+//       { path:'addUser', element: <AddUser />},
+//       { path:'issueBook', element: <IssueBook />},
+//       { path:'submitBook', element: <SubmitBook />},
+//       { path:'books', element: < DashboardHome/>},
+//       { path:'profile', element: < AdminProfile/>},
+//       { path:'users', element: < AllUsersPage/>},
 //   ],
 //    },
   
 //   ]);
 // const App = () => {
-//     return (
-//        <MyProvider>
-//          <Router>
-//             <Routes>
-//                 <Route path="/" element={<Home />}  children />
-//                 <Route path="/admin/dashboard" element={<Dashboard />} />
-//                 <Route path="/admin/dashboard/addUser" element={<AddUser />} />
-//                 <Route path="/admin/dashboard/addBook" element={<AddBook />} />
-//                 <Route path="/admin/dashboard/issueBook" element={<IssueBook />} />
-//                 <Route path="/admin/dashboard/submitBook" element={<SubmitBook />} />
-//             </Routes>
-//         </Router>
-//        </MyProvider>
+//     return ( 
+//     <MyProvider>
+
+//       <RouterProvider router={router} />
+
+//     </MyProvider>
 //     );
 // };
 
@@ -149,54 +150,4 @@ export default App;
 
 
 
-
-
-
-// // import React from 'react';
-// // import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider } from 'react-router-dom';
-// // import Home from './pages/Home';
-// // import Dashboard from './pages/dashboard';
-// // import AddUser from './pages/AddUser'
-// // import AddBook from './pages/AddBook';
-// // import  IssueBook from './pages/IssueBook'
-// // import SubmitBook from './pages/SubmitBook';
-// // import { MyProvider } from './MyContext';
-
-
-// // const router = createBrowserRouter([
-// //     {
-// //     path:'/',
-// //     element: <Home />,
-   
-// //     children: [
-// //       { index: true, element: <Home />}, 
-// //       { path:'/admin/dashboard', element: <Dashboard />},
-// //   ],
-// //    },
-  
-// //   ]);
-  
-
-// // const App = () => {
-// //     return <RouterProvider router={router} />;
-
-    
-// //     // return (
-        
-// //     // //    <MyProvider>
-// //     // //      <Router>
-// //     // //         <Routes>
-// //     // //             <Route path="/" element={<Home />}  children />
-// //     // //             <Route path="/admin/dashboard" element={<Dashboard />} />
-// //     // //             <Route path="/admin/dashboard/addUser" element={<AddUser />} />
-// //     // //             <Route path="/admin/dashboard/addBook" element={<AddBook />} />
-// //     // //             <Route path="/admin/dashboard/issueBook" element={<IssueBook />} />
-// //     // //             <Route path="/admin/dashboard/submitBook" element={<SubmitBook />} />
-// //     // //         </Routes>
-// //     // //     </Router>
-// //     // //    </MyProvider>
-// //     // );
-// // };
-
-// // export default App;
 

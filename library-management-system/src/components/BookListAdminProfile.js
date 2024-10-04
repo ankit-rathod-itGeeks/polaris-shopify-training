@@ -1,44 +1,52 @@
-import React, { useState } from 'react';
-import UsersTableAdminProfile from './UsersTableAdminProfile';
-import BooksTableAdminProfile from './BooksTableAdminProfile';
+import React, { useContext, useEffect, useState } from 'react';
 
-const dummyData = [
-    {
-      userName: 'John Doe',
-      userClass: '10th Grade',
-      phoneNumber: '123-456-7890',
-      address: '123 Main Street',
-      email: 'john.doe@example.com',
-    },
-    {
-      userName: 'Jane Smith',
-      userClass: '11th Grade',
-      phoneNumber: '987-654-3210',
-      address: '456 Oak Avenue',
-      email: 'jane.smith@example.com',
-    },
-  ];
+import BooksTableAdminProfile from './BooksTableAdminProfile';
+import axios from 'axios';
+import { MyContext } from '../MyContext';
+
+
+
 
 function BookListAdminProfile() {
-    const [users] = useState(dummyData);
+
+  const { seeAllBooks, setSeeAllBooks } = useContext(MyContext)
+  const [books, setBooks] = useState([])
+  useEffect(() => {
+    fetchBooksData()
+  }, [])
+
+  const fetchBooksData = async () => {
+    const result = await axios.get('http://localhost:8000/admin/allBooks')
+
+    setBooks(result.data.result.result.rows)
+
+  }
+
+  const handleSeBooks = () => {
+    setSeeAllBooks((val) =>
+      !val
+    )
+  }
+
   return (
-    <div  className='w-[100%] flex mt-4'>
-        <div className='w-[100%] bg-[#3B3B41] text-white p-4 rounded-lg'>
-       <div className='w-[100%] text-xl font-bold flex justify-between items-center'>
-        <label>Books List</label>
-       <button className='rounded-lg bg-white text-[#3B3B41] px-3 text-lg '>Add Book</button>
-       </div>
+    <div className='w-[100%] flex mt-4'>
+      <div className='w-[100%] bg-[#3B3B41] text-white p-4 rounded-lg'>
+        <div className='w-[100%] text-xl font-bold flex justify-between items-center'>
+          <label>Books List</label>
+          <button className='rounded-lg bg-white text-[#3B3B41] px-3 text-lg '>Add Book</button>
+        </div>
 
-       <div className='w-[100%]'>
+        <div className='w-[100%] flex flex-col'>
 
-        <BooksTableAdminProfile></BooksTableAdminProfile>
-       </div>
+          <BooksTableAdminProfile booksList={books}></BooksTableAdminProfile>
+          <button onClick={handleSeBooks} className='px-2 text-sm text-orange-700 self-end   '>See All</button>
+        </div>
+
+      </div>
+
 
     </div>
 
-
-    </div>
-   
   )
 }
 
