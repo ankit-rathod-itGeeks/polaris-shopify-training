@@ -6,6 +6,11 @@
         "path":"profile"
       },
       {
+        "icon": "MdAdminPanelSettings",
+        "text": "Books Request",
+        "path":"requestedBooks"
+      },
+      {
         "icon": "SiBookstack",
         "text": "Books",
          "path":"books"
@@ -56,17 +61,24 @@
       {
         "icon": "SiBookstack",
         "text": "Issued Books",
-         "path":"books"
+         "path":"issuedBooks"
       },
       {
         "icon": "PiStudentFill",
         "text": "Subjects",
-        "path":"users"
+        "path":"history"
+      }
+      ,
+      {
+        "icon": "PiStudentFill",
+        "text": "Apply Book",
+        "path":"applyIssueBook"
       }
       ,
       {
         "icon": "GiTeacher",
-        "text": "History"
+        "text": "History",
+        "path":"history"
       }
       
       

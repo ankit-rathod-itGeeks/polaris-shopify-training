@@ -4,6 +4,8 @@
  * @typedef {import('sequelize').Model} Model
  */
 
+const { DataTypes } = require('sequelize');
+
 /**
  * @param {Sequelize} sequelize
  * @param {typeof import('sequelize').DataTypes} DataTypes
@@ -40,6 +42,17 @@ module.exports = (sequelize, Sequelize) => {
         },
         returnDate: {
             type: Sequelize.DATE
+        },
+        actualReturnedDate: {
+            type: Sequelize.DATE
+        },
+        penalty: {
+            type: Sequelize.STRING,
+            defaultValue:"0"
+        },
+         submitted: {
+            type: DataTypes.ENUM('submitted','notSubmitted'),
+            defaultValue: 'notSubmitted'
         },
        
     });

@@ -18,13 +18,27 @@ function AdminProfile() {
     useEffect(()=>{
         getAllIssuedBooks()
       },[])
+    useEffect(()=>{
+        getPenalty()
+      },[])
 
 
      const [books, setBooks] = useState([]);
      const [users, setUsers] = useState([]);
+     const [penalty, setPenalty] = useState(0);
      const [issuedBooks, setIssuedBooks] = useState([]);
 
+const getPenalty=()=>{
+  axios.get('http://localhost:8000/admin/penaltyCollected').then((res)=>{
+     
+         
+    setPenalty(res.data.result.result[0].total_amount)
+  
+  }).catch((error)=>{
+    console.log(error);
+  })
 
+}
      const getBooksdata =()=>{
         axios.get('http://localhost:8000/admin/allBooks').then((res)=>{
          
@@ -72,16 +86,16 @@ function AdminProfile() {
   return (
     <div className='w-[100%] h-[100%] flex flex-col'>
       
-    <div className='w-[100%] h-[100%] bg-[#E5E7EB] flex'>
+    <div className='w-[100%] h-[100%]  flex'>
   
    <div className='w-[100%] flex justify-between items-center'>
     <label className='text-3xl font-bold p-2 '>
         <div>Hello , <span className='text-[#F65867]'>Admin !</span></div>
         <label>{formatDate(date)}</label></label>
-    <select className=' bg-[#3B3B41] text-lg mr-2 rounded-full p-1 focus:outline-none text-white'>
-        <option className='bg-[#3B3B41] text-sm'>This week</option>
-        <option className='bg-[#3B3B41] text-sm'>This Month</option>
-        <option className='bg-[#3B3B41] text-sm'>This Year</option>
+    <select className=' text-lg mr-2 rounded-full p-1 focus:outline-none '>
+        <option className=' text-sm'>This week</option>
+        <option className=' text-sm'>This Month</option>
+        <option className=' text-sm'>This Year</option>
     </select>
   
    </div>
@@ -124,34 +138,36 @@ function AdminProfile() {
  <div className=" w-[20%] flex justify-between items-center p-2 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
 
 <div>
-    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Users</div>
-<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">102</div>
+    <div className="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Total Penalty Collected</div>
+<div className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Rs. {penalty}</div>
 </div>
 <HiUsers className='text-5xl text-[#F65867]'></HiUsers>
 
 
 </div>
  
+
  
  
 
 
  </div>
+ 
 
  <div className='w-[100%] flex gap-4'>
-<div className='w-[50%]'>
+{/* <div className='w-[50%]'>
   <AdminProfileLists></AdminProfileLists>
 
 </div>
 <div className='w-[50%]'>
   <BookListAdminProfile></BookListAdminProfile>
 
-</div>
+</div> */}
 
  </div>
- <div className='w-[100%] mt-4'>
+ {/* <div className='w-[100%] mt-4'>
 <TopChoices></TopChoices>
- </div>
+ </div> */}
 
   </div>
   )

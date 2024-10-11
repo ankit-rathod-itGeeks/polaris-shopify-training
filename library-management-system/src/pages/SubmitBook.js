@@ -50,7 +50,7 @@ const handleToSubmit=()=>{
             <div className='w-[100%]  h-[100%] p-10'>
               
             {toSubmit ? 
-               <ConfirmBox setToSubmit={setToSubmit} setToGetUserId={setToGetUserId} bookToSubmit={bookToSubmit}></ConfirmBox>
+               <ConfirmBox setToSubmit={setToSubmit} setSelectSubmit={setSelelectSubmit} setToGetUserId={setToGetUserId} bookToSubmit={bookToSubmit}></ConfirmBox>
                 : null}
                        
                

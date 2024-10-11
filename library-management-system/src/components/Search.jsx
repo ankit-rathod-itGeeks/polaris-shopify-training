@@ -63,7 +63,7 @@ const handleBlurSearch=(e)=>{
         
         const filteredResults = books.filter((item) => 
             item.bookName.toLowerCase().includes(value.toLowerCase())
-        );
+        ); 
         
         setSearchResult(filteredResults);
     };

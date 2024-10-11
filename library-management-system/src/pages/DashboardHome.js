@@ -1,17 +1,20 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import View from '../components/View';
+import { MyContext } from '../MyContext';
 
 function DashboardHome() {
+  const {render,setRender}=useContext(MyContext)
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showTable, setShowTable] = useState(true);
   const [show, setShow] = useState(false);
   const [books, setBooks] = useState([]);
-  const [error, setError] = useState(null); // Added for error handling
+  const [error, setError] = useState(null);
 
   const getBookData = async () => {
     try {
       const response = await axios.get('http://localhost:8000/admin/allBooks');
-      console.log("API Response:", response.data); // Log the API response
+      console.log("API Response:", response.data); 
       setBooks(response.data.result.result.rows); 
     } catch (error) {
       console.error('Error fetching book data:', error);
@@ -20,39 +23,40 @@ function DashboardHome() {
   };
 
   const handleViewBook = (book) => {
-    console.log("Book Selected:", book); // Log the selected book
+    console.log("Book Selected:", book); 
     setSelectedBook(book);
-    localStorage.setItem("viewBook", JSON.stringify(book));
+    // localStorage.setItem("viewBook", JSON.stringify(book));
     setShow(true);
+    setShowTable(false); 
   };
 
   useEffect(() => {
     getBookData();
-  }, []);
+  }, [render]);
 
   useEffect(() => {
-    console.log("Selected Book:", selectedBook); // Log selected book
-    if (selectedBook) {
-      setShow(true);
-      console.log(show);
-    }
+    console.log("Selected Book:", selectedBook);
   }, [selectedBook]);
 
+  // useEffect(() => {
+  //   console.log("Show:", show);
+  //   console.log("Show Table:", showTable);
+  // }, [show, showTable]);
+
   return (
-    <div className="overflow-x-auto mt-3 w-full">
-      {error && <div className="text-red-500">{error}</div>}
+    <div className="flex flex-col justify-center items-center overflow-x-auto mt-3 w-full">
+      {/* {error && <div className="text-red-500">{error}</div>} */}
 
-
-
-      {!show ? (
+      {showTable ? (
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
-            <tr>
+            <tr> 
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pages</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Click to View</th>
             </tr>
           </thead>
@@ -64,8 +68,9 @@ function DashboardHome() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.author}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.price}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.pages}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.quantity}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  <button onClick={() => handleViewBook(book)} className="bg-green-400 rounded-lg text-white px-4 text-xl">View</button>
+                  <button  onClick={() => handleViewBook(book)} className="bg-green-400 rounded-lg text-white px-4 text-xl">View</button>
                 </td>
               </tr>
             ))}
@@ -73,12 +78,111 @@ function DashboardHome() {
         </table>
       ) : null}
 
-    {show ?  ( <View show={show} setShow={setShow} selectedBook={selectedBook} /> ) : null}
+      {show ? (
+        <div className='w-[100%] flex flex-col justify-center items-center'>
+          <View  setShowTable={setShowTable} setShow={setShow} book={selectedBook} /> 
+        </div>
+      ) : null}
     </div>
   );
 }
 
 export default DashboardHome;
+
+
+
+// import axios from 'axios';
+// import React, { useEffect, useState } from 'react';
+// import View from '../components/View';
+
+// function DashboardHome() {
+//   const [selectedBook, setSelectedBook] = useState(null);
+//   const [showTable,setShowTable]=useState(true)
+//   const [show, setShow] = useState(false);
+//   const [books, setBooks] = useState([]);
+//   const [error, setError] = useState(null); 
+//   const getBookData = async () => {
+//     try {
+//       const response = await axios.get('http://localhost:8000/admin/allBooks');
+//       console.log("API Response:", response.data); 
+//       setBooks(response.data.result.result.rows); 
+//     } catch (error) {
+//       console.error('Error fetching book data:', error);
+//       setError('Failed to fetch book data. Please try again later.');
+//     }
+//   };
+
+//   const handleViewBook = (book) => {
+//     console.log("Book Selected:", book); 
+//     setSelectedBook(book);
+//     localStorage.setItem("viewBook", JSON.stringify(book));
+//     // setShow(true);
+//   };
+
+//   useEffect(() => {
+//     getBookData();
+//   }, []);
+
+//   useEffect(() => {
+//     console.log("Selected Book:", selectedBook); 
+//     if (selectedBook) {
+//       setShow(true);
+//       setShowTable(false)
+//       console.log("show from dh,",show);
+//       console.log("tanle from dh,",showTable);
+      
+//     }
+//   }, [selectedBook]);
+
+//   return (
+//     <div className="overflow-x-auto mt-3 w-full">
+
+//       {/* {error && <div className="text-red-500">{error}</div>} */}
+
+
+
+//       { showTable ? (
+//         <table className="min-w-full divide-y divide-gray-200">
+//           <thead className="bg-gray-50">
+//             <tr> 
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Id</th>
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Book Name</th>
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author</th>
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pages</th>
+//               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Click to View</th>
+//             </tr>
+//           </thead>
+//           <tbody className="bg-white divide-y divide-gray-200">
+//             {books.map((book, index) => (
+//               <tr key={index}>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.id}</td>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.bookName}</td>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.author}</td>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.price}</td>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{book.pages}</td>
+//                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+//                   <button onClick={() => handleViewBook(book)} className="bg-green-400 rounded-lg text-white px-4 text-xl">View</button>
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//      ) : null }  
+//       {JSON.stringify(show)  }
+//       {JSON.stringify(showTable)  }
+
+//     { show ? 
+    
+//     <div>
+//     <View show={show} setShow={setShow} selectedBook={selectedBook}  /> 
+//     </div>
+//      : null}
+//     </div>
+//   );
+// }
+
+// export default DashboardHome;
 
 
 

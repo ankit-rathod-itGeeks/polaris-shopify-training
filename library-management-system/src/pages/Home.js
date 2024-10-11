@@ -4,10 +4,11 @@ import React, { useContext, useState } from 'react'
 
 import HomeMain from '../components/HomeMain'
 import axios from 'axios'
-import { redirect, useNavigate } from 'react-router-dom'
+import { redirect, useLocation, useNavigate } from 'react-router-dom'
 import { MyContext } from '../MyContext'
 
 function Home() {
+  
   const {currUser,setCurrUser}=useContext(MyContext)
  const navigate=useNavigate();
   const [user, setUser] = useState({})
@@ -21,6 +22,7 @@ const handleLogin=async ()=>{
 if(response.data.result.status==true){
   
 console.log(response.data.result.result);
+localStorage.setItem("currUser",JSON.stringify(response.data.result.result))
   setCurrUser(response.data.result.result)
   console.log(currUser);
   

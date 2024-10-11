@@ -18,9 +18,20 @@ db.sequelize=sequelize;
 
 
 
+db.requestedBooks=require('../models/requestedBooks')(sequelize,DataTypes) 
+
+
 db.user=require('../models/user.model')(sequelize,DataTypes) 
 db.book=require('../models/book')(sequelize,DataTypes) 
+
+
 db.issueBook=require('../models/issueBook')(sequelize,Sequelize) 
+
+db.book.hasMany(db.requestedBooks)
+db.requestedBooks.belongsTo(db.book)
+
+db.user.hasMany(db.requestedBooks)
+db.requestedBooks.belongsTo(db.user)
 
 db.user.hasMany(db.issueBook)
 db.issueBook.belongsTo(db.user)

@@ -93,6 +93,18 @@ exports.allIssuedBooks = async (req, res) => {
     }
 
 }
+exports.getRequestedBooks = async (req, res) => {
+    try {
+
+        const result = await getService.getRequestedBooks()
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
 exports.submitBook = async (req, res) => {
     try {
 
@@ -109,6 +121,76 @@ exports.updateStatus = async (req, res) => {
     try {
 
         const result = await getService.updateStatus(req)
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
+
+
+exports.deleteBook = async (req, res) => {
+    try {
+console.log(req.params.id);
+
+        const result = await getService.deleteBook(req)
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
+exports.penaltyCollected = async (req, res) => {
+    try {
+ 
+
+        const result = await getService.penaltyCollected(req)
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
+
+exports.studentIssuedBooks = async (req, res) => {
+    try {
+console.log(req.params.id);
+
+        const result = await getService.studentIssuedBooks(req)
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
+exports.studentBooksHistory = async (req, res) => {
+    try {
+console.log(req.params.id);
+
+        const result = await getService.studentBooksHistory(req)
+     
+        res.json({ result :result})
+    } catch (error) {
+        console.log(error);
+        res.json({ error })
+    }
+
+}
+
+
+exports.requestBook = async (req, res) => {
+    try {
+console.log(req.params.id);
+
+        const result = await getService.requestBook(req)
      
         res.json({ result :result})
     } catch (error) {

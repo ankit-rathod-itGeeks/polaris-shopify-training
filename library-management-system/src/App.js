@@ -14,6 +14,11 @@ import AllUsersPage from './pages/AllUsersPage';
 import StudentsHome from './pages/Students/StudentsHome';
 import StudentDashboard from './pages/Students/StudentDashboard';
 import RegistrationForm from './pages/Students/RegistrationForm';
+import Profile from './pages/Students/Profile';
+import IssuedBooks from './pages/Students/IssuedBooks';
+import History from './pages/Students/History';
+import ApplyIssueBook from './pages/Students/ApplyIssueBook';
+import RequestedBooks from './pages/RequestedBooks';
 
 
 
@@ -46,6 +51,7 @@ const router = createBrowserRouter([
       { path:'books', element: < DashboardHome/>},
       { path:'profile', element: < AdminProfile/>},
       { path:'users', element: < AllUsersPage/>},
+      { path:'requestedBooks', element: < RequestedBooks/>},
   ],
    },
    {
@@ -54,9 +60,11 @@ const router = createBrowserRouter([
 
     
     children:[
-      {
-        index:true,element:<StudentsHome></StudentsHome>
-      }
+      {index:true,element:<StudentsHome></StudentsHome>},
+      { path:'profile', element: < Profile/>},
+      { path:'issuedBooks', element: < IssuedBooks/>},
+      { path:'history', element: < History/>},
+      { path:'applyIssueBook', element: < ApplyIssueBook/>},
     ]
    }
   
@@ -65,11 +73,12 @@ const router = createBrowserRouter([
   function PrivateRoute({ children }) {
 
     const {currUser,setCurrUser}=useContext(MyContext)
+    const curr=JSON.parse(localStorage.getItem("currUser"))
 
 console.log(currUser)
-    const role = currUser.role;
+    const role = curr.role;
     console.log("Role from the pricvale route ",role)
-    return role=="Admin" ? children : <Navigate to="/studentsHome" />;
+    return role=="Admin" ? children : <Navigate to={'/studentsHome'}></Navigate>;
   }
 
 

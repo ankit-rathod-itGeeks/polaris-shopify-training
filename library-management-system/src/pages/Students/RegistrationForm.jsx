@@ -4,6 +4,9 @@ import SuccessCard from '../../components/SuccessCard';
 
 function RegistrationForm() {
     const [success,setSuccess]=useState(false)
+    const [phoneWarning,setPhoneWarning]=useState('')
+    const [passwordWarning,setPasswordWarning]=useState('')
+    const [userNameWarning,setUserNameWarning]=useState('')
     const [formData, setFormData] = useState({
         userName: '',
         email: '',
@@ -12,13 +15,35 @@ function RegistrationForm() {
         phoneNumber: '',
        
         password: '', // Add confirmPassword
-        gender: '',   // Initialize gender
+        gender: '',   
+        cPassword: '',   
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+         
+
+//       if(name=='password'){
+//         if(value.length < 6  && value.length>3){
+                 
+//                 setPasswordWarning("Password must be grater than 6 digits")
+//         }
+//         else{
+//                 setPasswordWarning("")
+//         }
+//       }
+
+//       if(name=='phoneNumber'){
+//         if(value.length !==10 ){
+                 
+//                 setPhoneWarning("Phone number must be valid")
+//         }
+//         else{
+//                 setPhoneWarning("")
+//         }
+//       }
         setFormData({ ...formData, [name]: value });
-    };
+     }
 
     const handleSubmit = async (e) => {
         
@@ -40,6 +65,7 @@ setTimeout(()=>setSuccess(false),4000)
 
        
        <h2 className="text-2xl font-bold text-center">Student Registration</h2>
+       
 
        <div className='flex  justify-center gap-4 mt-4'>
 
@@ -59,18 +85,21 @@ setTimeout(()=>setSuccess(false),4000)
  <label className='text-xl font-serif pl-2'>
   Email
  </label>
- <input
+ <input type='email'
  value={formData.email}  name='email'
          onChange={handleChange}
            placeholder='email' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
 </div>
-<div className='flex flex-col gap-2 p-2'>
+<div className='flex flex-col gap-2 p-2 relative'>
  <label className='text-xl font-serif pl-2'>
   Password
  </label>
- <input  placeholder='password' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
+ <input type='password'  value={formData.password}  name='password'
+         onChange={handleChange}
+           placeholder='password'   className=' p-2 border-[2px] border-gray-500 rounded-2xl'></input>
+           <label className='text-red-400 text-[12px] absolute top-[100%]'>{passwordWarning}</label>
 </div>
-<div className='flex flex-col gap-2 p-2'>
+<div className='mt-2 flex flex-col gap-2 p-2'>
  <label className='text-xl font-serif pl-2'>
   Gender
  </label>
@@ -109,21 +138,32 @@ setTimeout(()=>setSuccess(false),4000)
  <label className='text-xl font-serif pl-2'>
   Class
  </label>
- <input value={formData.userClass}  name='userClass'
-         onChange={handleChange} placeholder='Class' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
+ {/* <input value={formData.userClass}  name='userClass'
+         onChange={handleChange} placeholder='Class' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input> */}
+         <select onChange={handleChange} className='p-2 border-[2px] border-gray-500 rounded-2xl'>
+                <option name='userClass' value='10'>Class 10</option>
+                <option name='userClass' value='11'>Class 11</option>
+                <option name='userClass' value='12'>Class 12</option>
+                <option name='userClass' value='bca-1'>BCA 1 Year</option>
+                <option name='userClass' value='bca-2'>BCA 2 Year</option>
+                <option name='userClass' value='bca-3'>BCA 3 Year</option>
+                <option name='userClass' value='mca-1'>MCA 1 Year</option>
+                <option name='userClass' value='mca-2'>MCA 2 Year</option>
+                {/* <option value='bca-1'>BCA 1 Year</option> */}
+         </select>
 </div>
 <div className='flex flex-col gap-2 p-2'>
  <label className='text-xl font-serif pl-2'>
   Confirm Password
  </label>
- <input value={formData.password}  name='password'
+ <input value={formData.cPassword}  type='password' name='cPassword'
          onChange={handleChange} placeholder='Confirm Password' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
 </div>
 <div className='flex flex-col gap-2 p-2'>
  <label className='text-xl font-serif pl-2'>
   Address
  </label>
- <input value={formData.address}  name='address'
+ <input required value={formData.address}  name='address'
          onChange={handleChange} placeholder='Address' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
 </div>
 
@@ -132,7 +172,7 @@ setTimeout(()=>setSuccess(false),4000)
 
 
        </div>
-       <button onClick={handleSubmit} className='text-white p-2 text-xl rounded-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 w-[20%] '>Register</button>
+       <button  onClick={handleSubmit} className='text-white p-2 text-xl rounded-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 w-[20%] '>Register</button>
      
      </div>
      :null}

@@ -4,6 +4,7 @@ import HeaderDashboard from '../components/HeaderDashboard'
 import axios from 'axios';
 import SuccessCard from '../components/SuccessCard';
 import { MyContext } from '../MyContext';
+import RegistrationForm from './Students/RegistrationForm';
 
 function AddUser() {
      const [success,setSuccess]=useState(false)
@@ -54,9 +55,11 @@ function AddUser() {
     };
   return (
     <div className='w-[100%] h-[100%] bg-[#E5E7EB] flex '>
+
+        {/* <RegistrationForm></RegistrationForm> */}
     
    
-   <div className='w-[100%]'>
+    <div className='w-[100%]'>
       
        <div>
 
@@ -181,7 +184,7 @@ function AddUser() {
 
        </div>
       
-   </div>
+   </div> 
 
 
    </div>

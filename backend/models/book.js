@@ -18,6 +18,11 @@ module.exports = (sequelize, DataTypes) => {
         bookId: DataTypes.STRING,
         
         price: DataTypes.STRING,
+        quantity:{
+            type:DataTypes.INTEGER,
+            defaultValue:10
+    
+        } 
 
     }, {
         sequelize,
