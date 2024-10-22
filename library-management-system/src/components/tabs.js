@@ -4,7 +4,7 @@
 // import users from '../data/users.json'
 // import {
 //     IndexTable,
-    
+
 //     useIndexResourceState,
 //     Text,
 //     Badge,
@@ -29,7 +29,7 @@
 //       accessibilityLabel: 'All customers',
 //       panelID: 'all-customers-fitted-content-2',
 //       available:"No Books Available"
-      
+
 //     },
 //     {
 //       id: 'accepts-marketing-fitted-2',
@@ -39,7 +39,6 @@
 //     },
 //   ];
 
- 
 //   return (
 //     <LegacyCard>
 
@@ -47,8 +46,6 @@
 
 //         <LegacyCard.Section title={tabs[selected].content}>
 
-     
-    
 //       { tabBooks ? <div>
 //       {data.map((item, index) => (
 //         <div className='flex justify-around p-7 text-3xl items-center' >
@@ -60,7 +57,7 @@
 //     </div>:<div>
 //       {users.map((item, index) => (
 //         <div className='flex justify-around p-7 text-3xl items-center' >
-            
+
 //           <h3>{item.id}</h3>
 //           <p>Name: {item.full_name}</p>
 //           <p>email: {item.email}</p>
@@ -68,7 +65,6 @@
 //         </div>
 //       ))}
 //     </div>}
-       
 
 //         </LegacyCard.Section>
 //       </Tabs>

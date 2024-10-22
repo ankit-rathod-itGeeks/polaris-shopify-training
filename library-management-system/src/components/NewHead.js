@@ -1,4 +1,3 @@
-
 // import {
 //   Badge,
 //   ButtonGroup,
@@ -6,7 +5,6 @@
 //   Button,
 //   Text,
 // } from '@shopify/polaris';
-
 
 // import {useState, useCallback, useContext} from 'react';
 // import { MyContext } from '../MyContext';
@@ -55,8 +53,6 @@
 //           <Button onClick={() => setFullscreen(true)}>Go Fullscreen</Button>
 //         )}
 //         <Text variant="headingLg" as="p">
-
-
 
 //         </Text>
 //       </div>

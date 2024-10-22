@@ -1,201 +1,184 @@
-const getService = require('../services/admin')
-
-
+const getService = require("../services/admin");
+const { SuccessMessage, ErrorMessage } = require("../constants/messages");
+const { sendResponse } = require("../utils/sendResponse");
+const {} = require("../constants/statusCodes");
+const statusCodes = require("../constants/statusCodes");
 
 exports.register = async (req, res) => {
-    try {
-
-        const result = await getService.register(req)
-        res.json({ result })
-    } catch (error) {
-        res.json({ error })
-    }
-
-}
+  try {
+    const result = await getService.register(req);
+    res.json({ result });
+  } catch (error) {
+    res.json({ error });
+  }
+};
 exports.login = async (req, res) => {
-    try {
+  try {
+    const result = await getService.login(req);
 
-        const result = await getService.login(req)
-       
-        res.json({ result })
-    } catch (error) {
-        res.json({ error })
-    }
-
-}
+    res.json({ result });
+  } catch (error) {
+    res.json({ error });
+  }
+};
 exports.addBook = async (req, res) => {
-    try {
+  try {
+    const result = await getService.addBook(req);
 
-        const result = await getService.addBook(req)
-       
-        res.json({ result })
-    } catch (error) {
-        res.json({ error })
-    }
-
-}
+    res.json({ result });
+  } catch (error) {
+    res.json({ error });
+  }
+};
 exports.issueBook = async (req, res) => {
-    try {
+  try {
+    const result = await getService.issueBook(req);
 
-        const result = await getService.issueBook(req)
-       
-        res.json({ result })
-    } catch (error) {
-        res.json({ error })
-    }
-
-}
+    res.json({ result });
+  } catch (error) {
+    res.json({ error });
+  }
+};
 exports.assignedBooks = async (req, res) => {
-    try {
+  try {
+    const result = await getService.assignedBooks(req);
 
-        const result = await getService.assignedBooks(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.allBooks = async (req, res) => {
-    try {
+  try {
+    const result = await getService.allBooks(req);
 
-        const result = await getService.allBooks(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.allUsers = async (req, res) => {
-    try {
+  try {
+    const result = await getService.allUsers();
 
-        const result = await getService.allUsers()
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.allIssuedBooks = async (req, res) => {
-    try {
+  try {
+    const result = await getService.allIssuedBooks();
 
-        const result = await getService.allIssuedBooks()
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.getRequestedBooks = async (req, res) => {
-    try {
+  try {
+    const result = await getService.getRequestedBooks();
 
-        const result = await getService.getRequestedBooks()
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
+exports.approveBookRequest = async (req, res) => {
+  try {
+    const result = await getService.approveBookRequest(req);
+
+    if (result.status && result.result) {
+      sendResponse(res, statusCodes.OK, result.status, SuccessMessage.UPDATE);
     }
-
-}
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.submitBook = async (req, res) => {
-    try {
+  try {
+    const result = await getService.submitBook(req);
 
-        const result = await getService.submitBook(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.updateStatus = async (req, res) => {
-    try {
+  try {
+    const result = await getService.updateStatus(req);
 
-        const result = await getService.updateStatus(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
-
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 
 exports.deleteBook = async (req, res) => {
-    try {
-console.log(req.params.id);
+  try {
+    console.log(req.params.id);
 
-        const result = await getService.deleteBook(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
+    const result = await getService.deleteBook(req);
 
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.penaltyCollected = async (req, res) => {
-    try {
- 
+  try {
+    const result = await getService.penaltyCollected(req);
 
-        const result = await getService.penaltyCollected(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
-
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 
 exports.studentIssuedBooks = async (req, res) => {
-    try {
-console.log(req.params.id);
+  try {
+    console.log(req.params.id);
 
-        const result = await getService.studentIssuedBooks(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
+    const result = await getService.studentIssuedBooks(req);
 
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 exports.studentBooksHistory = async (req, res) => {
-    try {
-console.log(req.params.id);
+  try {
+    console.log(req.params.id);
 
-        const result = await getService.studentBooksHistory(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
+    const result = await getService.studentBooksHistory(req);
 
-}
-
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};
 
 exports.requestBook = async (req, res) => {
-    try {
-console.log(req.params.id);
+  try {
+    console.log(req.params.id);
 
-        const result = await getService.requestBook(req)
-     
-        res.json({ result :result})
-    } catch (error) {
-        console.log(error);
-        res.json({ error })
-    }
+    const result = await getService.requestBook(req);
 
-}
+    res.json({ result: result });
+  } catch (error) {
+    console.log(error);
+    res.json({ error });
+  }
+};

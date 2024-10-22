@@ -1,192 +1,229 @@
-import axios from 'axios';
-import React, { useState } from 'react'
-import SuccessCard from '../../components/SuccessCard';
+import axios from "axios";
+import React, { useState } from "react";
+import SuccessCard from "../../components/SuccessCard";
 
 function RegistrationForm() {
-    const [success,setSuccess]=useState(false)
-    const [phoneWarning,setPhoneWarning]=useState('')
-    const [passwordWarning,setPasswordWarning]=useState('')
-    const [userNameWarning,setUserNameWarning]=useState('')
-    const [formData, setFormData] = useState({
-        userName: '',
-        email: '',
-        userClass: '', // Initialize userClass
-        address: '',   // Initialize address
-        phoneNumber: '',
-       
-        password: '', // Add confirmPassword
-        gender: '',   
-        cPassword: '',   
-    });
+  const [success, setSuccess] = useState(false);
+  const [phoneWarning, setPhoneWarning] = useState("");
+  const [passwordWarning, setPasswordWarning] = useState("");
+  const [userNameWarning, setUserNameWarning] = useState("");
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    userClass: "", // Initialize userClass
+    address: "", // Initialize address
+    phoneNumber: "",
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-         
+    password: "", // Add confirmPassword
+    gender: "",
+    cPassword: "",
+  });
 
-//       if(name=='password'){
-//         if(value.length < 6  && value.length>3){
-                 
-//                 setPasswordWarning("Password must be grater than 6 digits")
-//         }
-//         else{
-//                 setPasswordWarning("")
-//         }
-//       }
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-//       if(name=='phoneNumber'){
-//         if(value.length !==10 ){
-                 
-//                 setPhoneWarning("Phone number must be valid")
-//         }
-//         else{
-//                 setPhoneWarning("")
-//         }
-//       }
-        setFormData({ ...formData, [name]: value });
-     }
+    //       if(name=='password'){
+    //         if(value.length < 6  && value.length>3){
 
-    const handleSubmit = async (e) => {
-        
-        e.preventDefault();
-        const response =await axios.post('http://localhost:8000/admin/register',formData)
-        console.log(response.data.result.status)
-        if(response.data.result.status){
-setSuccess(true)
-setTimeout(()=>setSuccess(false),4000)
-        }
-        console.log(response)
-        console.log(formData);
-    };
+    //                 setPasswordWarning("Password must be grater than 6 digits")
+    //         }
+    //         else{
+    //                 setPasswordWarning("")
+    //         }
+    //       }
+
+    //       if(name=='phoneNumber'){
+    //         if(value.length !==10 ){
+
+    //                 setPhoneWarning("Phone number must be valid")
+    //         }
+    //         else{
+    //                 setPhoneWarning("")
+    //         }
+    //       }
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post(
+      "http://localhost:8000/admin/register",
+      formData,
+    );
+    console.log(response.data.result.status);
+    if (response.data.result.status) {
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 4000);
+    }
+    console.log(response);
+    console.log(formData);
+  };
   return (
-    <div className='h-[100vh] flex justify-center items-center  w-[100%] bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% '>
-     {success ?    <SuccessCard success={success} text={"Student Registered Successfully"} id={""} ></SuccessCard> : null}
-     {!success ?   
-       <div className='w-[50%]  flex flex-col justify-center items-center bg-white rounded-xl p-3 '>
+    <div className="h-[100vh] flex justify-center items-center  w-[100%] bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% ">
+      {success ? (
+        <SuccessCard
+          success={success}
+          text={"Student Registered Successfully"}
+          id={""}
+        ></SuccessCard>
+      ) : null}
+      {!success ? (
+        <div className="w-[50%]  flex flex-col justify-center items-center bg-white rounded-xl p-3 ">
+          <h2 className="text-2xl font-bold text-center">
+            Student Registration
+          </h2>
 
-       
-       <h2 className="text-2xl font-bold text-center">Student Registration</h2>
-       
+          <div className="flex  justify-center gap-4 mt-4">
+            <div className="flex flex-col ">
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Full Name</label>
+                <input
+                  value={formData.userName}
+                  name="userName"
+                  onChange={handleChange}
+                  placeholder="Fullname"
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+              </div>
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Email</label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  name="email"
+                  onChange={handleChange}
+                  placeholder="email"
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+              </div>
+              <div className="flex flex-col gap-2 p-2 relative">
+                <label className="text-xl font-serif pl-2">Password</label>
+                <input
+                  type="password"
+                  value={formData.password}
+                  name="password"
+                  onChange={handleChange}
+                  placeholder="password"
+                  className=" p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+                <label className="text-red-400 text-[12px] absolute top-[100%]">
+                  {passwordWarning}
+                </label>
+              </div>
+              <div className="mt-2 flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Gender</label>
 
-       <div className='flex  justify-center gap-4 mt-4'>
-
-<div className='flex flex-col '>
-
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Full Name
- </label>
- <input  value={formData.userName}
-         name='userName'
-         onChange={handleChange}
-          placeholder='Fullname'
-           className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-</div>
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Email
- </label>
- <input type='email'
- value={formData.email}  name='email'
-         onChange={handleChange}
-           placeholder='email' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-</div>
-<div className='flex flex-col gap-2 p-2 relative'>
- <label className='text-xl font-serif pl-2'>
-  Password
- </label>
- <input type='password'  value={formData.password}  name='password'
-         onChange={handleChange}
-           placeholder='password'   className=' p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-           <label className='text-red-400 text-[12px] absolute top-[100%]'>{passwordWarning}</label>
-</div>
-<div className='mt-2 flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Gender
- </label>
-
-
-<div className='flex gap-3 '>
-  
-<div className='flex flex-col  justify-center items-center'>
- <input value={'male'} onChange={handleChange} name="gender" placeholder='password' type='radio' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
- <label className='font-serif pl-2'>
-  Male
- </label>
- </div>
- <div className='flex flex-col justify-center items-center'>
- <input value={'female'} onChange={handleChange} name="gender" placeholder='password' type='radio' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
- <label className='font-serif pl-2'>
-  Female
- </label>
- </div>
-</div>
-</div>
-
-
-
-</div>
-<div className='flex flex-col'>
-
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Phone Number
- </label>
- <input  value={formData.phoneNumber}  name='phoneNumber'
-         onChange={handleChange} placeholder='Phone Number' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-</div>
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Class
- </label>
- {/* <input value={formData.userClass}  name='userClass'
+                <div className="flex gap-3 ">
+                  <div className="flex flex-col  justify-center items-center">
+                    <input
+                      value={"male"}
+                      onChange={handleChange}
+                      name="gender"
+                      placeholder="password"
+                      type="radio"
+                      className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                    ></input>
+                    <label className="font-serif pl-2">Male</label>
+                  </div>
+                  <div className="flex flex-col justify-center items-center">
+                    <input
+                      value={"female"}
+                      onChange={handleChange}
+                      name="gender"
+                      placeholder="password"
+                      type="radio"
+                      className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                    ></input>
+                    <label className="font-serif pl-2">Female</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Phone Number</label>
+                <input
+                  value={formData.phoneNumber}
+                  name="phoneNumber"
+                  onChange={handleChange}
+                  placeholder="Phone Number"
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+              </div>
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Class</label>
+                {/* <input value={formData.userClass}  name='userClass'
          onChange={handleChange} placeholder='Class' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input> */}
-         <select onChange={handleChange} className='p-2 border-[2px] border-gray-500 rounded-2xl'>
-                <option name='userClass' value='10'>Class 10</option>
-                <option name='userClass' value='11'>Class 11</option>
-                <option name='userClass' value='12'>Class 12</option>
-                <option name='userClass' value='bca-1'>BCA 1 Year</option>
-                <option name='userClass' value='bca-2'>BCA 2 Year</option>
-                <option name='userClass' value='bca-3'>BCA 3 Year</option>
-                <option name='userClass' value='mca-1'>MCA 1 Year</option>
-                <option name='userClass' value='mca-2'>MCA 2 Year</option>
-                {/* <option value='bca-1'>BCA 1 Year</option> */}
-         </select>
-</div>
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Confirm Password
- </label>
- <input value={formData.cPassword}  type='password' name='cPassword'
-         onChange={handleChange} placeholder='Confirm Password' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-</div>
-<div className='flex flex-col gap-2 p-2'>
- <label className='text-xl font-serif pl-2'>
-  Address
- </label>
- <input required value={formData.address}  name='address'
-         onChange={handleChange} placeholder='Address' className='p-2 border-[2px] border-gray-500 rounded-2xl'></input>
-</div>
-
-</div>
-
-
-
-       </div>
-       <button  onClick={handleSubmit} className='text-white p-2 text-xl rounded-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 w-[20%] '>Register</button>
-     
-     </div>
-     :null}
-
-
-       
-      
+                <select
+                  onChange={handleChange}
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                >
+                  <option name="userClass" value="10">
+                    Class 10
+                  </option>
+                  <option name="userClass" value="11">
+                    Class 11
+                  </option>
+                  <option name="userClass" value="12">
+                    Class 12
+                  </option>
+                  <option name="userClass" value="bca-1">
+                    BCA 1 Year
+                  </option>
+                  <option name="userClass" value="bca-2">
+                    BCA 2 Year
+                  </option>
+                  <option name="userClass" value="bca-3">
+                    BCA 3 Year
+                  </option>
+                  <option name="userClass" value="mca-1">
+                    MCA 1 Year
+                  </option>
+                  <option name="userClass" value="mca-2">
+                    MCA 2 Year
+                  </option>
+                  {/* <option value='bca-1'>BCA 1 Year</option> */}
+                </select>
+              </div>
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">
+                  Confirm Password
+                </label>
+                <input
+                  value={formData.cPassword}
+                  type="password"
+                  name="cPassword"
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+              </div>
+              <div className="flex flex-col gap-2 p-2">
+                <label className="text-xl font-serif pl-2">Address</label>
+                <input
+                  required
+                  value={formData.address}
+                  name="address"
+                  onChange={handleChange}
+                  placeholder="Address"
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                ></input>
+              </div>
+            </div>
+          </div>
+          <button
+            onClick={handleSubmit}
+            className="text-white p-2 text-xl rounded-full bg-gradient-to-r from-teal-400 to-blue-500 hover:from-pink-500 hover:to-orange-500 w-[20%] "
+          >
+            Register
+          </button>
+        </div>
+      ) : null}
     </div>
-  )
+  );
 }
 
-export default RegistrationForm
-
-
+export default RegistrationForm;
 
 // import React, { useState } from 'react';
 

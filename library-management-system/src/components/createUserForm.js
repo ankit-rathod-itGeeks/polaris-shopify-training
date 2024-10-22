@@ -11,8 +11,6 @@
 //     });
 //     const [successRegister, setSuccessRegister] = useState(false)
 
-
-
 //     // Generic change handler
 //     const handleChange = (field) => (value) => {
 //         setUser((prevUser) => ({
@@ -73,7 +71,7 @@
 //                 />
 //             </FormLayout.Group>
 //             <Button size='large' onClick={submitting}>submit</Button>
-            
+
 //             {successRegister ? <div className='bg-green-300 rounded-md p-2 text-[20px]'>Register Successfull</div> : null}
 //         </FormLayout >
 //     );

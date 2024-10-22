@@ -25,35 +25,35 @@
 //     return (
 //         <FormLayout>
 //             <FormLayout.Group condensed>
-//                 <TextField 
-//                     label="Author" 
+//                 <TextField
+//                     label="Author"
 //                     value={book.author} // Bind the value
-//                     onChange={handleChange('author')} 
-//                     autoComplete="off" 
+//                     onChange={handleChange('author')}
+//                     autoComplete="off"
 //                 />
-//                 <TextField 
-//                     label="Total Pages" 
+//                 <TextField
+//                     label="Total Pages"
 //                     value={book.totalPages} // Bind the value
-//                     onChange={handleChange('totalPages')} 
-//                     autoComplete="off" 
+//                     onChange={handleChange('totalPages')}
+//                     autoComplete="off"
 //                 />
-//                 <TextField 
-//                     label="Book Id" 
+//                 <TextField
+//                     label="Book Id"
 //                     value={book.bookId} // Bind the value
-//                     onChange={handleChange('bookId')} 
-//                     autoComplete="off" 
+//                     onChange={handleChange('bookId')}
+//                     autoComplete="off"
 //                 />
-//                 <TextField 
-//                     label="Price" 
+//                 <TextField
+//                     label="Price"
 //                     value={book.price} // Bind the value
-//                     onChange={handleChange('price')} 
-//                     autoComplete="off" 
+//                     onChange={handleChange('price')}
+//                     autoComplete="off"
 //                 />
-//                 <TextField 
-//                     label="Book Name" 
+//                 <TextField
+//                     label="Book Name"
 //                     value={book.bookName} // Bind the value
-//                     onChange={handleChange('bookName')} 
-//                     autoComplete="off" 
+//                     onChange={handleChange('bookName')}
+//                     autoComplete="off"
 //                 />
 //             </FormLayout.Group>
 //             <Button size='large' onClick={submitting}>Submit</Button>

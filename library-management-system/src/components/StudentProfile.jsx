@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
 const StudentProfile = (student) => {
-    console.log("student form stude profile component",student)
+  console.log("student form stude profile component", student);
   return (
     <div className="p-4 ">
       <div className="container mx-auto">
@@ -14,14 +14,18 @@ const StudentProfile = (student) => {
                   src="https://png.pngtree.com/thumb_back/fh260/background/20230624/pngtree-3d-rendering-of-a-student-listening-to-music-with-headphones-image_3671188.jpg"
                   alt="student dp"
                 />
-                <h3 className="text-2xl font-bold">{student.student.userName}</h3>
+                <h3 className="text-2xl font-bold">
+                  {student?.student?.userName}
+                </h3>
               </div>
               <div className="p-4">
                 <p className="mb-0">
-                  <strong className="pr-1">Student ID:</strong>{student.student.id}
+                  <strong className="pr-1">Student ID:</strong>
+                  {student?.student?.id}
                 </p>
                 <p className="mb-0">
-                  <strong className="pr-1">Class:</strong> {student.student.userClass}
+                  <strong className="pr-1">Class:</strong>{" "}
+                  {student?.student?.userClass}
                 </p>
                 <p className="mb-0">
                   <strong className="pr-1">Section:</strong> A
@@ -42,7 +46,7 @@ const StudentProfile = (student) => {
                     <tr>
                       <th className="w-1/3 border p-2">Roll</th>
                       <td className="w-1/12 border p-2">:</td>
-                      <td className="border p-2">{student.student.id}</td>
+                      <td className="border p-2">{student?.student?.id}</td>
                     </tr>
                     <tr>
                       <th className="border p-2">Academic Year</th>
@@ -52,22 +56,35 @@ const StudentProfile = (student) => {
                     <tr>
                       <th className="border p-2">Phone</th>
                       <td className="border p-2">:</td>
-                      <td className="border p-2">{student.student.phoneNumber}</td>
+                      <td className="border p-2">
+                        {student?.student?.phoneNumber}
+                      </td>
                     </tr>
                     <tr>
                       <th className="border p-2">Address</th>
                       <td className="border p-2">:</td>
-                      <td className="border p-2">{student.student.address}</td>
+                      <td className="border p-2">
+                        {student?.student?.address}
+                      </td>
                     </tr>
                     <tr>
                       <th className="border p-2">Email</th>
                       <td className="border p-2">:</td>
-                      <td className="border p-2">{student.student.email}</td>
+                      <td className="border p-2">{student?.student?.email}</td>
                     </tr>
                     <tr>
                       <th className="border p-2">Status</th>
                       <td className="border p-2">:</td>
-                      <td style={(student.student.status)=='activated'  ? {color:'green' } : {color:'red'}} className="border p-2">{(student.student.status).toUpperCase()}</td>
+                      <td
+                        style={
+                          student?.student?.status == "activated"
+                            ? { color: "green" }
+                            : { color: "red" }
+                        }
+                        className="border p-2"
+                      >
+                        {student?.student?.status.toUpperCase()}
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -82,10 +99,10 @@ const StudentProfile = (student) => {
               </div>
               <div className="pt-0 p-4">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                  eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                  enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                  nisi ut aliquip ex ea commodo consequat.
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.
                 </p>
               </div>
             </div>

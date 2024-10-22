@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 function ColorDropdown() {
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedColor, setSelectedColor] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const colors = ['Red', 'Green', 'Blue'];
+  const colors = ["Red", "Green", "Blue"];
 
   const handleSelectColor = (color) => {
     setSelectedColor(color);
@@ -22,42 +22,42 @@ function ColorDropdown() {
 
   useEffect(() => {
     // Attach event listener for clicks outside
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
-    <div ref={dropdownRef} style={{ position: 'relative' }}>
+    <div ref={dropdownRef} style={{ position: "relative" }}>
       <label htmlFor="color-dropdown">Choose a color:</label>
-      <div 
+      <div
         onClick={() => setIsOpen((prev) => !prev)} // Toggle dropdown
-        style={{ 
-          border: '1px solid #ccc', 
-          padding: '5px', 
-          cursor: 'pointer' 
+        style={{
+          border: "1px solid #ccc",
+          padding: "5px",
+          cursor: "pointer",
         }}
       >
-        {selectedColor || 'Select a color'}
+        {selectedColor || "Select a color"}
       </div>
       {isOpen && (
-        <ul 
-          style={{ 
-            border: '1px solid #ccc', 
-            padding: 0, 
-            margin: 0, 
-            listStyleType: 'none', 
-            position: 'absolute', 
-            backgroundColor: 'white', 
-            zIndex: 1 
+        <ul
+          style={{
+            border: "1px solid #ccc",
+            padding: 0,
+            margin: 0,
+            listStyleType: "none",
+            position: "absolute",
+            backgroundColor: "white",
+            zIndex: 1,
           }}
         >
           {colors.map((color) => (
-            <li 
-              key={color} 
-              onClick={() => handleSelectColor(color)} 
-              style={{ padding: '5px', cursor: 'pointer' }}
+            <li
+              key={color}
+              onClick={() => handleSelectColor(color)}
+              style={{ padding: "5px", cursor: "pointer" }}
             >
               {color}
             </li>

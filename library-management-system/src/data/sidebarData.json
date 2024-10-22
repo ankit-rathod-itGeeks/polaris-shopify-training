@@ -1,91 +1,76 @@
 {
-    "sidebarItems": [
-      {
-        "icon": "MdAdminPanelSettings",
-        "text": "Admin Profile",
-        "path":"profile"
-      },
-      {
-        "icon": "MdAdminPanelSettings",
-        "text": "Books Request",
-        "path":"requestedBooks"
-      },
-      {
-        "icon": "SiBookstack",
-        "text": "Books",
-         "path":"books"
-      },
-      {
-        "icon": "PiStudentFill",
-        "text": "Students",
-        "path":"users"
-      }
-      ,
-      {
-        "icon": "GiTeacher",
-        "text": "Teachers"
-      }
-      ,
-      {
-        "icon": "TiUserAdd",
-        "text": "Add User",
-        "path":"addUser"
-      }
-      ,
-      {
-        "icon": "BiSolidBookAdd",
-        "text": "Add Book",
-          "path":"addBook"
-      }
-      ,
-      {
-        "icon": "FaBookOpenReader",
-        "text": "Issue Book",
-          "path":"issueBook"
-      }
-      ,
-      {
-        "icon": "TiUserDeleteOutline",
-        "text": "Submit Book",
-          "path":"submitBook"
-      }
-    ],
+  "sidebarItems": [
+    {
+      "icon": "MdAdminPanelSettings",
+      "text": "Admin Profile",
+      "path": "profile"
+    },
+    {
+      "icon": "MdAdminPanelSettings",
+      "text": "Books Request",
+      "path": "requestedBooks"
+    },
+    {
+      "icon": "SiBookstack",
+      "text": "Books",
+      "path": "books"
+    },
+    {
+      "icon": "PiStudentFill",
+      "text": "Students",
+      "path": "users"
+    },
+    {
+      "icon": "GiTeacher",
+      "text": "Teachers"
+    },
+    {
+      "icon": "TiUserAdd",
+      "text": "Add User",
+      "path": "addUser"
+    },
+    {
+      "icon": "BiSolidBookAdd",
+      "text": "Add Book",
+      "path": "addBook"
+    },
+    {
+      "icon": "FaBookOpenReader",
+      "text": "Issue Book",
+      "path": "issueBook"
+    },
+    {
+      "icon": "TiUserDeleteOutline",
+      "text": "Submit Book",
+      "path": "submitBook"
+    }
+  ],
 
-
-    "studentsSidebar": [
-      {
-        "icon": "MdAdminPanelSettings",
-        "text": "Students Profile",
-        "path":"profile"
-      },
-      {
-        "icon": "SiBookstack",
-        "text": "Issued Books",
-         "path":"issuedBooks"
-      },
-      {
-        "icon": "PiStudentFill",
-        "text": "Subjects",
-        "path":"history"
-      }
-      ,
-      {
-        "icon": "PiStudentFill",
-        "text": "Apply Book",
-        "path":"applyIssueBook"
-      }
-      ,
-      {
-        "icon": "GiTeacher",
-        "text": "History",
-        "path":"history"
-      }
-      
-      
-     
-     
-    
-    ]
-
-  }
-  
+  "studentsSidebar": [
+    {
+      "icon": "MdAdminPanelSettings",
+      "text": "Students Profile",
+      "path": "profile"
+    },
+    {
+      "icon": "SiBookstack",
+      "text": "Issued Books",
+      "path": "issuedBooks"
+    },
+    {
+      "icon": "PiStudentFill",
+      "text": "Subjects",
+      "path": "history"
+    },
+    {
+      "icon": "PiStudentFill",
+      "text": "Apply Book",
+      "path": "applyIssueBook"
+    },
+    {
+      "icon": "GiTeacher",
+      "text": "History",
+      "path": "history"
+    }
+  ]
+}

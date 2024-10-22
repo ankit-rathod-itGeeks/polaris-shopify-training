@@ -1,583 +1,564 @@
-const Users = require('../models').user
-const bcrypt = require('bcrypt')
+const Users = require("../models").user;
+const bcrypt = require("bcrypt");
 
-const { where } = require('sequelize')
-const { book, issueBook, user, sequelize, requestedBooks } = require('../models')
-const { raw } = require('express')
-
-
+const { where } = require("sequelize");
+const {
+  book,
+  issueBook,
+  user,
+  sequelize,
+  requestedBooks,
+} = require("../models");
+const { raw } = require("express");
+const { generateToken } = require("../utils/generateToken");
 
 exports.register = async (req, res) => {
-    try {
-        console.log("------------------register api----------------------------");
+  try {
+    console.log("------------------register api----------------------------");
 
-        const password = bcrypt.hashSync(req.body.password, 10)
-        const result = await Users.create({ ...req.body, password: password })
+    const password = bcrypt.hashSync(req.body.password, 10);
+    const result = await Users.create({ ...req.body, password: password });
 
-
-
-        return {
-            status: true, result: result
-        }
-
-    } catch (error) {
-        console.log(error)
-        return {
-            status: false, result: error
-        }
-    }
-}
+    return {
+      status: true,
+      result: result,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 exports.login = async (req, res) => {
-    try {
-        console.log("------------------login api----------------------------");
-        // const password=await bcrypt.hashSync(req.body.password,10)
-        console.log(req.body);
-        const response = await Users.findOne({ where: { email: req.body.userName } })
+  try {
+    console.log("------------------login api----------------------------");
+    // const password=await bcrypt.hashSync(req.body.password,10)
+    console.log(req.body);
+    const response = await Users.findOne({
+      where: { email: req.body.userName },
+    });
 
+    if (response) {
+      // console.log(response);
 
-        if (response) {
+      const isPasswordCorrect = await bcrypt.compare(
+        req.body.password,
+        response.password,
+      );
+      console.log(isPasswordCorrect);
 
+      if (isPasswordCorrect) {
+      }
 
-            const isPasswordCorrect = await bcrypt.compare(req.body.password, response.password)
-            console.log(isPasswordCorrect);
-            if (isPasswordCorrect) {
-                return {
-                    status: true,
-                    result: response
-                }
+      if (isPasswordCorrect) {
+        const tokenData = {
+          id: response.id,
+          role: response.role,
+        };
 
-            }
-            else {
-                return {
-                    status: false
-                }
-            }
+        const token = generateToken(tokenData);
 
+        if (token) {
+          return {
+            status: true,
+            result: token,
+          };
+        } else {
+          return {
+            status: false,
+          };
         }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error)
+      } else {
         return {
-            status: false, result: error
-        }
+          status: false,
+        };
+      }
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.addBook = async (req, res) => {
-    try {
-        console.log("------------------add book api----------------------------");
+  try {
+    console.log("------------------add book api----------------------------");
 
-        console.log(req.body);
+    console.log(req.body);
 
-        const response = await book.create({ ...req.body })
+    const response = await book.create({ ...req.body });
 
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error)
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.issueBook = async (req, res) => {
-    try {
-        console.log("------------------issue book api----------------------------");
-        console.log(req.body);
+  try {
+    console.log("------------------issue book api----------------------------");
+    console.log(req.body);
 
-        const response = await issueBook.create({ ...req.body })
+    const response = await issueBook.create({ ...req.body });
 
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error)
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.assignedBooks = async (req, res) => {
-    try {
+  try {
+    console.log(
+      "------------------asssigned books api----------------------------",
+    );
 
-        console.log("------------------asssigned books api----------------------------");
+    const response = await issueBook.findAll({
+      where: {
+        userId: req.params.id,
+        submitted: "notSubmitted",
+      },
+      include: [
+        {
+          model: book,
+        },
+      ],
+    });
 
-
-        const response = await issueBook.findAll({
-            where: {
-                userId: req.params.id,
-                submitted: 'notSubmitted'
-            },
-            include: [{
-                model: book
-            }]
-        })
-
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error)
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.allBooks = async (req, res) => {
-    try {
+  try {
+    console.log("------------------all books api----------------------------");
 
-        console.log("------------------all books api----------------------------");
+    const response = await book.findAndCountAll();
 
-
-        const response = await book.findAndCountAll()
-
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error)
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.allUsers = async (req, res) => {
-    try {
+  try {
+    console.log("------------------all users api----------------------------");
 
-        console.log("------------------all users api----------------------------");
+    const response = await Users.findAndCountAll({
+      where: { role: "Student" },
+      order: [["id", "DESC"]],
+    });
 
-        const response = await Users.findAndCountAll({
-            where: { role: 'Student' },
-            order: [
-                ['id', 'DESC'],
-
-            ],
-        })
-
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.allIssuedBooks = async (req, res) => {
-    try {
-        console.log("------------------all issued books api----------------------------");
+  try {
+    console.log(
+      "------------------all issued books api----------------------------",
+    );
 
+    const response = await issueBook.findAndCountAll();
 
-        const response = await issueBook.findAndCountAll()
-
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.getRequestedBooks = async (req, res) => {
-    try {
-        console.log("-----------------getRequestedBooks books api----------------------------");
+  try {
+    console.log(
+      "-----------------getRequestedBooks books api----------------------------",
+    );
 
+    const response = await requestedBooks.findAll({
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: book,
+        },
+        {
+          model: user,
+          attributes: { exclude: ["password"] },
+        },
+      ],
+    });
 
-        const response = await requestedBooks.findAll({
-            include:[
-                {
-                    model:book
-                },{
-                    model:user,
-                    attributes: { exclude: ['password'] } 
-                }
-            ]
-        })
-
-        if (response) {
-
-
-            return {
-                status: true,
-                result: response
-            }
-        }
-        else {
-            return {
-                status: false,
-
-            }
-        }
-
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
+exports.approveBookRequest = async (req, res) => {
+  try {
+    console.log(
+      "-----------------approveBookRequest books api----------------------------",
+    );
+    console.log(req.body);
+
+    const response = await requestedBooks.update(
+      { isApproved: req.body.toApprove },
+      { where: { id: req.params.id } },
+    );
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.submitBook = async (req, res) => {
-    try {
+  try {
+    console.log(
+      "------------------submit book api----------------------------",
+    );
 
-        console.log("------------------submit book api----------------------------");
+    console.log(req.body);
 
-        console.log(req.body);
+    const response = await issueBook.update(
+      {
+        penalty: req.body.penalty,
+        submitted: "submitted",
+        actualReturnedDate: req.body.returnedDate,
+      },
+      {
+        where: {
+          userId: req.body.userId,
+          bookId: req.body.bookId,
+        },
+      },
+    );
 
-        const response = await issueBook.update({ penalty: req.body.penalty, submitted: "submitted", actualReturnedDate: req.body.returnedDate }, {
-            where: {
-                userId: req.body.userId,
-                bookId: req.body.bookId
-
-
-            }
-        })
-
-
-
-
-        return {
-            status: true,
-            result: response
-
-        }
-
-
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
-    }
-}
+    return {
+      status: true,
+      result: response,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.updateStatus = async (req, res) => {
-    try {
-        console.log("------------------update status api----------------------------");
+  try {
+    console.log(
+      "------------------update status api----------------------------",
+    );
 
-        console.log(req.body);
+    console.log(req.body);
 
-        const response = await user.update({ status: req.body.status }, {
-            where: { id: req.body.userId }
-        })
+    const response = await user.update(
+      { status: req.body.status },
+      {
+        where: { id: req.body.userId },
+      },
+    );
 
-
-        if (response) {
-            return {
-                status: true,
-                result: response
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 exports.deleteBook = async (req) => {
-    try {
-        console.log("------------------deleteBook  api----------------------------");
+  try {
+    console.log(
+      "------------------deleteBook  api----------------------------",
+    );
 
+    const assignedUsers = await issueBook.destroy({
+      where: { bookId: req.params.id },
+    });
+    console.log(assignedUsers);
+    const response = await book.destroy({ where: { id: req.params.id } });
 
-        const assignedUsers = await issueBook.destroy({ where: { bookId: req.params.id } })
-        console.log(assignedUsers);
-        const response = await book.destroy({ where: { id: req.params.id } })
-
-
-        if (response) {
-            return {
-                status: true,
-                result: response
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (response) {
+      return {
+        status: true,
+        result: response,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 exports.penaltyCollected = async (req) => {
-    try {
-        console.log("------------------penaltyCollected  api----------------------------");
+  try {
+    console.log(
+      "------------------penaltyCollected  api----------------------------",
+    );
 
-        const result = await issueBook.findAll({
-            attributes: [
-                [sequelize.fn("SUM", sequelize.col("penalty")), "total_amount"]
-            ],
-            raw: true
-        });
+    const result = await issueBook.findAll({
+      attributes: [
+        [sequelize.fn("SUM", sequelize.col("penalty")), "total_amount"],
+      ],
+      raw: true,
+    });
 
-        console.log(result);
+    console.log(result);
 
-
-
-        if (result) {
-            return {
-                status: true,
-                result: result
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (result) {
+      return {
+        status: true,
+        result: result,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.studentIssuedBooks = async (req) => {
-    try {
-        console.log("------------------studentIssuedBooks  api----------------------------");
+  try {
+    console.log(
+      "------------------studentIssuedBooks  api----------------------------",
+    );
 
+    const studentIssuedBooks = await issueBook.findAndCountAll({
+      where: { userId: req.params.id, submitted: "notSubmitted" },
+      include: [
+        {
+          model: book,
+        },
+      ],
+    });
+    console.log(studentIssuedBooks);
 
-        const studentIssuedBooks = await issueBook.findAndCountAll({
-            where: { userId: req.params.id, submitted: 'notSubmitted' },
-            include: [{
-                model: book
-            }]
-        })
-        console.log(studentIssuedBooks);
-
-
-        if (studentIssuedBooks) {
-            return {
-                status: true,
-                result: studentIssuedBooks
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (studentIssuedBooks) {
+      return {
+        status: true,
+        result: studentIssuedBooks,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.studentBooksHistory = async (req) => {
-    try {
-        console.log("------------------studentBooksHistory  api----------------------------");
+  try {
+    console.log(
+      "------------------studentBooksHistory  api----------------------------",
+    );
 
+    const studentIssuedBooks = await issueBook.findAndCountAll({
+      where: { userId: req.params.id },
+      include: [
+        {
+          model: book,
+        },
+      ],
+    });
+    console.log(studentIssuedBooks);
 
-        const studentIssuedBooks = await issueBook.findAndCountAll({
-            where: { userId: req.params.id },
-            include: [{
-                model: book
-            }]
-        })
-        console.log(studentIssuedBooks);
-
-
-        if (studentIssuedBooks) {
-            return {
-                status: true,
-                result: studentIssuedBooks
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (studentIssuedBooks) {
+      return {
+        status: true,
+        result: studentIssuedBooks,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
-
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};
 
 exports.requestBook = async (req) => {
-    try {
-        console.log("------------------requestBook  api----------------------------");
-        console.log(req.params.id);
-        console.log("body-", req.body);
+  try {
+    console.log(
+      "------------------requestBook  api----------------------------",
+    );
+    console.log(req.params.id);
+    console.log("body-", req.body);
 
+    const result = await requestedBooks.create({
+      userId: req.params.id,
+      bookId: req.body.bookId,
+      duration: req.body.duration,
+    });
 
-        const result = await requestedBooks.create({ userId: req.params.id, bookId: req.body.bookId, duration: req.body.duration })
+    console.log(result);
 
-
-        console.log(result);
-
-
-        if (result) {
-            return {
-                status: true,
-                result: result
-
-            }
-        }
-        else {
-            return {
-                status: false,
-
-
-            }
-        }
-
-
-    } catch (error) {
-        console.log(error);
-        return {
-            status: false, result: error
-        }
+    if (result) {
+      return {
+        status: true,
+        result: result,
+      };
+    } else {
+      return {
+        status: false,
+      };
     }
-}
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      result: error,
+    };
+  }
+};

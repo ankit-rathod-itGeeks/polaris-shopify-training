@@ -1,19 +1,14 @@
-import React from 'react'
-import StudentProfile from '../../components/StudentProfile'
+import React from "react";
+import StudentProfile from "../../components/StudentProfile";
 
 function Profile() {
-    const curr=JSON.parse(localStorage.getItem("currUser"))
+  const curr = JSON.parse(localStorage.getItem("currUser"));
 
   return (
-    <div className='w-full '>
-
-
-
+    <div className="w-full ">
       <StudentProfile student={curr}></StudentProfile>
-        
-       
-       </div>
-  )
+    </div>
+  );
 }
 
-export default Profile
+export default Profile;
