@@ -20,10 +20,7 @@
       "text": "Students",
       "path": "users"
     },
-    {
-      "icon": "GiTeacher",
-      "text": "Teachers"
-    },
+   
     {
       "icon": "TiUserAdd",
       "text": "Add User",
@@ -57,11 +54,7 @@
       "text": "Issued Books",
       "path": "issuedBooks"
     },
-    {
-      "icon": "PiStudentFill",
-      "text": "Subjects",
-      "path": "history"
-    },
+    
     {
       "icon": "PiStudentFill",
       "text": "Apply Book",

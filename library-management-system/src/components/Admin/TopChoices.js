@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
-import images from "../data/imagesData.json";
+import images from "../../data/imagesData.json";
 
 function TopChoices() {
   console.log(images.images);

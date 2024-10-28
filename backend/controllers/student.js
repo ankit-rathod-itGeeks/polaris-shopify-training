@@ -16,3 +16,33 @@ exports.getAllrequestedBooks = async (req, res) => {
     );
   }
 };
+
+
+exports.uploadProfileImage = async (req, res) => {
+  const result = await getService.uploadProfileImage(req);
+  
+
+  if (result.status && result.result) {
+    sendResponse(
+      res,
+      statusCodes.OK,
+      true,
+      SuccessMessage.FETCH,
+      result.result,
+    );
+  }
+};
+exports.getProfileImage = async (req, res) => {
+  const result = await getService.getProfileImage(req);
+  
+
+  if (result.status && result.result) {
+    sendResponse(
+      res,
+      statusCodes.OK,
+      true,
+      SuccessMessage.FETCH,
+      result.result,
+    );
+  }
+};

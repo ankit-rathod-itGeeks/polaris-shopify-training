@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 
 function BooksTableAdminProfile(props) {
   const { seeAllBooks, setSeeAllBooks } = useContext(MyContext);

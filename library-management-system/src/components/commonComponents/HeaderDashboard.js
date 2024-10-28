@@ -3,15 +3,31 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 import Search from "./Search";
+import { useDispatch, useSelector } from "react-redux";
+import { change } from "../../Redux/Features/ProfiePopUp/profilePopUpSlice";
 
 function HeaderDashboard() {
+
+  const profileImage=useSelector(state=>state.profilePopUp.profileImage)
   const { hideSidebar, setHideSidebar } = useContext(MyContext);
+ 
   const navigate = useNavigate();
+  const currUser=JSON.parse(localStorage.getItem('currUser'))
   const handleSidebar = () => {
     setHideSidebar((val) => !val);
   };
+
+const isPopupOpen=useSelector(state=>state.profilePopUp.value)
+const dispatch = useDispatch()
+  const handleclick=()=>{
+ 
+    dispatch(change())
+    
+  }
+
+
   const handleActionClick = (path) => {
     // setUserActive(count)
     setTimeout(() => {
@@ -21,6 +37,11 @@ function HeaderDashboard() {
   const [userActve, setUserActive] = useState(1);
   return (
     <div className=" w-full flex justify-between p-2 items-center ">
+
+
+ 
+
+
       <div className="flex gap-2 justify-center items-center  text-base text-[#3B3B41] cursor-pointer">
         <IoMenu
           className="text-3xl text-[#3B3B41]   "
@@ -30,22 +51,22 @@ function HeaderDashboard() {
       <div className="flex justify-center items-center  gap-4 border p-2 rounded-full bg-[#3B3B41]">
         <label className="text-white px-4 font-semibold">
           {" "}
-          Library Management System
+          Library Management System 
         </label>
       </div>
       <div className="flex justify-center items-center   ">
-        <Search className=" rounded-full h-[5vh] p-2"></Search>
+        <Search className=" rounded-full h-[5vh] p-2"></Search> 
       </div>
 
       <div className="flex justify-center items-center  gap-2 ">
         <IoIosSettings className="text-3xl" />
-        <div className="flex justify-center h-[50px] w-[50px] rounded-full  items-center">
+        <div onClick={handleclick} className="flex justify-center h-[50px] w-[50px] rounded-full  items-center">
           <img
-            className="object-cover rounded-full"
-            src="https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-600nw-418179856.jpg"
+            className="object-contain rounded-full"
+            src={profileImage ? `${profileImage}` : 'https://www.shutterstock.com/image-vector/user-icon-trendy-flat-style-600nw-418179856.jpg'}
           ></img>
         </div>
-        <label className="text-xl">ADMIN</label>
+        <label className="text-xl">{currUser?.role}</label>
       </div>
     </div>
   );

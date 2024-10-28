@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 
 function Search() {
   const [books, setBooks] = useState([]);

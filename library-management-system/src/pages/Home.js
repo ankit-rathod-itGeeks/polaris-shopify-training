@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-import HomeMain from "../components/HomeMain";
+ 
 import axios from "axios";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
 import { MyContext } from "../MyContext";
@@ -31,7 +31,8 @@ function Home({ setRole, setAuthenticated }) {
     if (response.data.result.status == true) {
       const token = response.data.result.result;
 
-      console.log(response.data.result.result);
+      console.log("token",response.data.result.result);
+      console.log("Details",response.data.result.details);
 
       Cookies.set("token", token, { expires: 7, secure: true });
       const curr = jwtDecode(token);
@@ -39,7 +40,7 @@ function Home({ setRole, setAuthenticated }) {
       setRole(curr?.role);
       setAuthenticated(true);
 
-      // localStorage.setItem("currUser",JSON.stringify(response.data.result.result))
+      localStorage.setItem("currUser",JSON.stringify(response.data.result.details))
       // setCurrUser(response.data.result.result)
       // console.log(currUser);
 
@@ -70,15 +71,15 @@ function Home({ setRole, setAuthenticated }) {
               type="text"
               onChange={(e) => setUser({ ...user, userName: e.target.value })}
               placeholder="Username"
-              className="focus:outline-none mt-4 border placeholder:text-[13px] flex items-center justify-center p-2 border-purple-300 border-[2px] rounded-full"
-            ></input>
+              className="focus:outline-none mt-4   placeholder:text-[13px] flex items-center justify-center p-2 border-purple-300 border-[2px] rounded-full"
+            ></input> 
           </div>
 
           <input
             type="password"
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             placeholder="Password"
-            className="focus:outline-none mt-4 border placeholder:text-[13px] flex items-center justify-center p-2 border-purple-300 border-[2px] rounded-full"
+            className="focus:outline-none mt-4   placeholder:text-[13px] flex items-center justify-center p-2 border-purple-300 border-[2px] rounded-full"
           ></input>
           <label className="text-red-600">{message}</label>
 

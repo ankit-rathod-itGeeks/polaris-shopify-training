@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import UsersTableAdminProfile from "./UsersTableAdminProfile";
 import axios from "axios";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 
 function AdminProfileLists() {
   const { seeAllUsers, setSeeAllUsers } = useContext(MyContext);

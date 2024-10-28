@@ -1,3 +1,4 @@
+require('appoptics-apm')
 require("dotenv").config();
 const express = require("express");
 const Admin = require("./routes/index").adminRouter;
@@ -5,6 +6,7 @@ const Student = require("./routes/index").studentRouter;
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const session = require("express-session");
+
 
 const app = express();
 
@@ -20,6 +22,16 @@ app.use(
     saveUninitialized: true,
   }),
 );
+
+
+const path = require('path');
+
+const parentDirectory = path.join(__dirname, "/utils")
+console.log("pare",parentDirectory);
+ 
+
+app.use('/images', express.static(path.join(parentDirectory, 'images')));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -27,6 +39,8 @@ app.use(bodyParser.json());
 
 app.use("/student", Student);
 app.use("/admin", Admin);
+
+
 
 app.listen(port, () =>
   console.log(`server is lisrening at port number ${port}`),

@@ -6,19 +6,19 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Layout/dashboard";
 import RegistrationForm from "./pages/Students/RegistrationForm";
-import PrivateRoute from "./Routes/PrivateRoute";
+ 
 import { MyProvider } from "./MyContext";
-import AdminProfile from "./pages/AdminProfile";
-import AllUsersPage from "./pages/AllUsersPage";
-import RequestedBooks from "./pages/RequestedBooks";
-import AddUser from "./pages/AddUser";
-import AddBook from "./pages/AddBook";
-import IssueBook from "./pages/IssueBook";
-import SubmitBook from "./pages/SubmitBook";
+import AdminProfile from "./pages/Admin/AdminProfile";
+import AllUsersPage from "./pages/Admin/AllUsersPage";
+import RequestedBooks from "./pages/Admin/RequestedBooks";
+import AddUser from "./pages/Admin/AddUser";
+import AddBook from "./pages/Admin/AddBook";
+import IssueBook from "./pages/Admin/IssueBook";
+import SubmitBook from "./pages/Admin/SubmitBook";
 
-import DashboardHome from "./pages/DashboardHome";
+import DashboardHome from "./pages/Admin/DashboardHome";
 import { jwtDecode } from "jwt-decode";
 import StudentRoutes from "./Routes/StudentRoutes";
 import StudentsHome from "./pages/Students/StudentsHome";
@@ -63,7 +63,10 @@ const App = () => {
           <Route path="/login" element={<Home />} />
           <Route path="/registerStudent" element={<RegistrationForm />} />
 
-          {authenticated && role == "Admin" ? (
+          {
+          authenticated && role == "Admin" 
+          ? 
+          (
             <Route path="/dashboard" element={<Dashboard></Dashboard>}>
               <Route index element={<AdminProfile />} />
               <Route path="addBook" element={<AddBook />} />

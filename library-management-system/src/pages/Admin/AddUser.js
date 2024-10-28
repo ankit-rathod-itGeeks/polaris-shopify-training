@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import HeaderDashboard from "../components/HeaderDashboard";
+import React, { useContext, useEffect, useState } from "react";
+import Sidebar from "../../components/commonComponents/Sidebar";
+import HeaderDashboard from "../../components/commonComponents/HeaderDashboard";
 import axios from "axios";
-import SuccessCard from "../components/SuccessCard";
-import { MyContext } from "../MyContext";
-import RegistrationForm from "./Students/RegistrationForm";
+import SuccessCard from "../../components/commonComponents/SuccessCard";
+import { MyContext } from "../../MyContext";
+ 
 
 function AddUser() {
   const [success, setSuccess] = useState(false);
@@ -20,6 +20,9 @@ function AddUser() {
     email: "",
     password: "",
   });
+  useEffect(()=>{
+console.log("formData---",formData);
+  },[formData])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -98,7 +101,41 @@ function AddUser() {
                     >
                       User Class
                     </label>
-                    <input
+
+                    <select
+name="userClass"
+                      id="userClass"
+value={formData.userClass}
+                  onChange={handleChange}
+                  className="p-2 border-[2px] border-gray-500 rounded-2xl"
+                >
+                  <option name="userClass" value="10">
+                    Class 10
+                  </option>
+                  <option name="userClass" value="11">
+                    Class 11
+                  </option>
+                  <option name="userClass" value="12">
+                    Class 12
+                  </option>
+                  <option name="userClass" value="bca-1">
+                    BCA 1 Year
+                  </option>
+                  <option name="userClass" value="bca-2">
+                    BCA 2 Year
+                  </option>
+                  <option name="userClass" value="bca-3">
+                    BCA 3 Year
+                  </option>
+                  <option name="userClass" value="mca-1">
+                    MCA 1 Year
+                  </option>
+                  <option name="userClass" value="mca-2">
+                    MCA 2 Year
+                  </option>
+                  {/* <option value='bca-1'>BCA 1 Year</option> */}
+                </select>
+                    {/* <input
                       type="text"
                       name="userClass"
                       id="userClass"
@@ -106,7 +143,7 @@ function AddUser() {
                       onChange={handleChange}
                       className="w-full p-2 border border-gray-300 rounded"
                       required
-                    />
+                    /> */}
                   </div>
 
                   <div className="mb-4">

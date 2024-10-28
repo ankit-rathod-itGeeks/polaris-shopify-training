@@ -11,6 +11,10 @@ function ApplyIssueBook() {
     duration: "",
   });
 
+
+  useEffect(()=>{
+    console.log("requestBook----",requestBook)
+  },[requestBook])
   const [requestedBooks, setRequestedBook] = useState([]);
 
   useEffect(() => {
@@ -60,8 +64,10 @@ function ApplyIssueBook() {
   }, [requestBook]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
 
+   
+    const { name, value } = e.target;
+    console.log("name-value---",name,value)
     setRequestBook({
       ...requestBook,
       [name]: value,
@@ -94,6 +100,7 @@ function ApplyIssueBook() {
         >
           {books?.map((item, index) => (
             <option value={item.id} key={item.id} className="text-sm">
+           {   console.log("itemsss",item.id)}
               {item.bookName}
             </option>
           ))}

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
-import HeaderDashboard from "./components/HeaderDashboard";
+import HeaderDashboard from "./components/commonComponents/HeaderDashboard";
 import axios from "axios";
 
 // Create the context

@@ -1,7 +1,7 @@
 const Users = require("../models").user;
 const bcrypt = require("bcrypt");
 
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const {
   book,
   issueBook,
@@ -11,6 +11,7 @@ const {
 } = require("../models");
 const { raw } = require("express");
 const { generateToken } = require("../utils/generateToken");
+const logger = require("../logger");
 
 exports.register = async (req, res) => {
   try {
@@ -34,14 +35,20 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     console.log("------------------login api----------------------------");
-    // const password=await bcrypt.hashSync(req.body.password,10)
+
+    // logger.warn("warning Information")
+    logger.info("------------------login api----------------------------")
+    // logger.debug("debug Information")  
     console.log(req.body);
+    
+    // const password=await bcrypt.hashSync(req.body.password,10)
+    
     const response = await Users.findOne({
       where: { email: req.body.userName },
     });
 
     if (response) {
-      // console.log(response);
+      
 
       const isPasswordCorrect = await bcrypt.compare(
         req.body.password,
@@ -64,6 +71,7 @@ exports.login = async (req, res) => {
           return {
             status: true,
             result: token,
+            details:response.dataValues
           };
         } else {
           return {
@@ -144,13 +152,30 @@ exports.issueBook = async (req, res) => {
 
 exports.assignedBooks = async (req, res) => {
   try {
-    console.log(
-      "------------------asssigned books api----------------------------",
-    );
+   
+    const approvedBooks=await requestedBooks.findAll({
+      where:{
+        userId: req.params.id,
+        isApproved:true,
+      },
+      include: [
+        {
+          model: book,
+          attributes:['id']
+        },
+      ],
+    })
+
+
+    const books=approvedBooks.map((i)=>i.dataValues.book.dataValues.id)
+    console.log("approvedBooks-are -----------------------------------",books);
 
     const response = await issueBook.findAll({
       where: {
+
+         
         userId: req.params.id,
+        bookId: { [Op.in]: [...books] },
         submitted: "notSubmitted",
       },
       include: [
@@ -159,6 +184,8 @@ exports.assignedBooks = async (req, res) => {
         },
       ],
     });
+
+    console.log("response-are -----------------------------------",response);
 
     if (response) {
       return {
@@ -308,6 +335,10 @@ exports.approveBookRequest = async (req, res) => {
       { where: { id: req.params.id } },
     );
     if (response) {
+
+     
+
+        
       return {
         status: true,
         result: response,

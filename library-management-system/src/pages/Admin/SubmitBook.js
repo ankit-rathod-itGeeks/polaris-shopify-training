@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import HeaderDashboard from "../components/HeaderDashboard";
+import Sidebar from "../../components/commonComponents/Sidebar";
+import HeaderDashboard from "../../components/commonComponents/HeaderDashboard";
 import axios from "axios";
 import { ImCross } from "react-icons/im";
-import ConfirmBox from "../components/ConfirmBox";
+import ConfirmBox from "../../components/commonComponents/ConfirmBox";
 
 function SubmitBook() {
   const bookToSubmit = JSON.parse(localStorage.getItem("book"));

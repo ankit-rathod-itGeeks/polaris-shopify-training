@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 
 function UsersTableAdminProfile(props) {
   const { usersList } = props;

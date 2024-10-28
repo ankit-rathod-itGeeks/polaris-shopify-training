@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import HeaderDashboard from "../components/HeaderDashboard";
+import Sidebar from "../../components/commonComponents/Sidebar";
+import HeaderDashboard from "../../components/commonComponents/HeaderDashboard";
 import axios from "axios";
-import { MyContext } from "../MyContext";
-import SuccessCard from "../components/SuccessCard";
+import { MyContext } from "../../MyContext";
+import SuccessCard from "../../components/commonComponents/SuccessCard";
 
 function AddBook() {
   // const {hideSidebar, setHideSidebar}=useContext(MyContext)

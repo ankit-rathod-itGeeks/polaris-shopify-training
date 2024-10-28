@@ -10,8 +10,8 @@ import { BiSolidBookAdd } from "react-icons/bi";
 import { FaBookOpenReader } from "react-icons/fa6";
 import { TiUserDeleteOutline } from "react-icons/ti";
 import { RxDashboard } from "react-icons/rx";
-import sidebarData from "../data/sidebarData.json";
-import { MyContext } from "../MyContext";
+import sidebarData from "../../data/sidebarData.json";
+import { MyContext } from "../../MyContext";
 import { jwtDecode } from "jwt-decode";
 
 function Sidebar() {

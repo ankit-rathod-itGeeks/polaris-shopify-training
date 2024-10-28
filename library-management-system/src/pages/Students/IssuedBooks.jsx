@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { MyContext } from "../../MyContext";
-import Color from "../../components/Color";
+ 
+ 
 import cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "../../Redux/Features/Counter/counterSlice";
 function IssuedBooks() {
   const curr = jwtDecode(cookies.get("token"));
-  const { render, setRender } = useContext(MyContext);
+  
   const [issuedBooks, setIssuedBooks] = useState([]);
 
   const [penalty, setPenalty] = useState(0);
@@ -47,6 +49,14 @@ function IssuedBooks() {
     console.log(currentDate); // "17-6-2022"
     return currentDate;
   };
+  const dispatch=useDispatch()
+  const count=useSelector((state)=>state.counter.value)
+  const handleIncrement=()=>{
+     dispatch(increment())
+  }
+  const handleDecrement=()=>{
+     dispatch(decrement())
+  }
 
   const getIssuedBooks = async () => {
     try {
@@ -124,7 +134,10 @@ function IssuedBooks() {
                   colSpan="5"
                   className="px-6 py-4 text-sm text-gray-900 text-center"
                 >
-                  No issued books found.
+
+                  <button onClick={handleIncrement}>Increment</button><br></br>
+                  click:{count}<br></br>
+                  <button onClick={handleDecrement}>Decrement</button><br></br>
                 </td>
               </tr>
             )}

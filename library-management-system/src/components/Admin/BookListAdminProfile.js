@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import BooksTableAdminProfile from "./BooksTableAdminProfile";
 import axios from "axios";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 
 function BookListAdminProfile() {
   const { seeAllBooks, setSeeAllBooks } = useContext(MyContext);

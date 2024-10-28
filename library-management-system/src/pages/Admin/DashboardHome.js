@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import View from "../components/View";
-import { MyContext } from "../MyContext";
+import View from "../../components/View";
+import { MyContext } from "../../MyContext";
 
 function DashboardHome() {
   const { render, setRender } = useContext(MyContext);

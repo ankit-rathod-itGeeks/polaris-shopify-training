@@ -1,5 +1,5 @@
 import React from "react";
-import StudentProfile from "../../components/StudentProfile";
+import StudentProfile from "../../components/Student/StudentProfile";
 
 function Profile() {
   const curr = JSON.parse(localStorage.getItem("currUser"));

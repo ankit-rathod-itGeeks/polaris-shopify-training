@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
+      imageURL:DataTypes.STRING,
       status: {
         type: DataTypes.ENUM("activated", "deActivated"),
         defaultValue: "deActivated",

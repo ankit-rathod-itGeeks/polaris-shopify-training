@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HiUsers } from "react-icons/hi";
-import AdminProfileLists from "../components/AdminProfileLists";
-import BookListAdminProfile from "../components/BookListAdminProfile";
-import TopChoices from "../components/TopChoices";
+import AdminProfileLists from "../../components/Admin/AdminProfileLists";
+import BookListAdminProfile from "../../components/Admin/BookListAdminProfile";
+import TopChoices from "../../components/Admin/TopChoices";
 import axios from "axios";
-import { MyContext } from "../MyContext";
+import { MyContext } from "../../MyContext";
 import { IoBookSharp } from "react-icons/io5";
 import { LuBookOpenCheck } from "react-icons/lu";
 function AdminProfile() {

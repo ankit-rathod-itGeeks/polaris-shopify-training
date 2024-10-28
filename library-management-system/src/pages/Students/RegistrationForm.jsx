@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import SuccessCard from "../../components/SuccessCard";
+import SuccessCard from "../../components/commonComponents/SuccessCard";
 
 function RegistrationForm() {
   const [success, setSuccess] = useState(false);
